@@ -1,0 +1,33 @@
+.form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 81vw;
+    height: 90vh;
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-content label {
+    margin-bottom: .5em;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.form-content input,
+.form-content select {
+    margin-bottom: 1em;
+    padding: 1em .5em;
+    width: 25em;
+}
+
+.form-content .button {
+    margin-top: 1em;
+}
+
+.error-message {
+    color: red;
+}

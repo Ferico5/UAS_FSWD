@@ -1,0 +1,51 @@
+.fillform-complaint {
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.fillform-complaint p {
+    background-color: #FFF;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 1em;
+}
+
+#explain_complaint, 
+.fillform-complaint select {
+    width: 60%;
+    margin: 0 10em 0 1em;
+    padding: .4em;
+}
+
+.buttonform {
+    display: flex;
+    justify-content: center;
+    margin: .5em 0;
+}
+
+.buttonform button[type="reset"] {
+    background-color: #3E3F3A;
+}
+
+.buttonform button[type="submit"] {
+    background-color: #2E5A82;
+    color: #DCDCDA;
+}
+
+.buttonform button {
+    border-radius: 2px;
+    border: none;
+    padding: .5em 1em;
+    margin: 1em;
+}
+
+.buttonform button a {
+    color: #DCDCDA;
+    text-decoration: none;
+}
+
+.buttonform button:hover {
+    cursor: pointer;
+}

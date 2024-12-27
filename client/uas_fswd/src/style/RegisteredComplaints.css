@@ -1,0 +1,18 @@
+table button {
+    background-color: #228EBD;
+    color: #9ED5DC;
+    font-weight: bold;
+    font-size: .8em;
+    padding: .5em .9em;
+    border-radius: 5px;
+    border: 1px solid #228EBD;
+}
+
+table button:hover {
+    cursor: pointer;
+    color: #eee;
+}
+
+#center {
+    text-align: center;
+}

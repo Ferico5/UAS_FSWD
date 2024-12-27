@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    background-color: #3A4348;
+    color: #fff;
+    display: flex;
+    padding: 1em 3em;
+    justify-content: space-between;
+}
+
+.title-header h1 a {
+    color: #fff;
+    font-size: .8em;
+    text-decoration: none;
+}
+
+.login-header {
+    display: flex;
+    align-items: center;
+}
+
+.user-name {
+    font-size: .6em;
+}
+
+.logout a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 3em;
+    font-weight: 900;
+}
+
+.logout a:hover {
+    color: #61dafb;
+}
