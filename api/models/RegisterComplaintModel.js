@@ -1,43 +1,43 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import db from '../config/Database.js';
+import Registration from './RegistrationModel.js';
 
-class Registration extends Model {}
+class RegisterComplaint extends Model {}
 
-Registration.init({
-  id_user: {
+RegisterComplaint.init({
+  register_complaint_id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  full_name: {
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: Registration, // Nama model yang menjadi referensi
+      key: 'id_user',      // Nama kolom yang menjadi referensi di model Registration
+    },
+  },
+  room_no: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  complaint_type: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  gender: {
+  explain_complaint: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  contact_no: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  role: {
+  complaint_status: {
     type: DataTypes.STRING,
     allowNull: false,
   },
 }, {
   sequelize: db,
-  modelName: 'Registration',
-  tableName: 'registration',
+  modelName: 'register_complaint',
+  tableName: 'register_complaint',
   freezeTableName: true,
 });
 
@@ -51,4 +51,4 @@ Registration.init({
   }
 })();
 
-export default Registration
+export default RegisterComplaint

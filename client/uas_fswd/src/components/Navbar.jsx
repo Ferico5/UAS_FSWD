@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 export default function Navbar() {
   const { isLoggedIn } = useAuth(); // Ambil status login dan data user dari context
-  const [isAdmin] = useState(false)
+  const [isAdmin] = useState(true)
 
   return (
     <div className="navbar">
@@ -17,7 +17,7 @@ export default function Navbar() {
               <Link className="link" to="/">Dashboard</Link>
               <Link className="link" to="/rooms">Rooms</Link>
               <Link className="link" to="/add_room">Add Room</Link>
-              <Link className="link" to="/complaints">Complaints</Link>
+              <Link className="link" to="/registered_complaints">Complaints</Link>
               <Link className="link" to="/feedback">Feedback</Link>
               <Link className="link" to="/my_profile">My Profile</Link>
               <Link className="link" to="/add_admin">Add Admin</Link>

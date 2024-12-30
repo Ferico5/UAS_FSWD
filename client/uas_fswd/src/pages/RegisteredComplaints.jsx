@@ -1,11 +1,16 @@
 import '../style/RegisteredComplaints.css';
 import '../style/RoomDetails.css'
+import { useState } from 'react';
 
 export default function RegisteredComplaints() {
+  const [isAdmin] = useState(true)
+
   return (
     <div className="container">
       <div className="content">
-        <h2>Registered Complaints</h2>
+        {
+          isAdmin ? (<h2>Registered Complaints</h2>) : (<h2>My Complaints</h2>)
+        }
 
         <div>
           <div className="box">

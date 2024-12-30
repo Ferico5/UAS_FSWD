@@ -1,13 +1,44 @@
-import '../style/Feedback.css'
+import '../style/Feedback.css';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function Feedback() {
+  const [isAdmin] = useState(true);
+
   return (
     <div className="container">
       <div className="content">
-        <h2>Feedback</h2>
+        {isAdmin ? <h2>Registered Complaints</h2> : <h2>My Complaints</h2>}
 
-        <div className="box-feedback">
+        {isAdmin ? (
+          <div className="box-feedback">
+          <div className="boxheader">
+              <p>COMPLAINT DETAILS</p>
+          </div>
+          <div className="boxinfo">
+              <table border="1" cellSpacing="0">
+                  <thead>
+                      <tr>
+                          <th>No</th>
+                          <th>Full name</th>
+                          <th>Room No</th>
+                          <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {/* looping */}
+                      <tr>
+                          <td id="center"></td>
+                          <td></td>
+                          <td id="center"></td>
+                          <td id="center"><a href=""><button>Action</button></a></td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+        ) : (
+          <div className="box-feedback">
           <form className="form-feedback" method="post">
             <div className="fillform-feedback">
               <div className="flex">
@@ -126,7 +157,7 @@ export default function Feedback() {
                 <div className="flexforp">
                   <p>Feedback Message (if any): </p>
                 </div>
-                <input type="text" name="feedback_message" className='input-type'></input>
+                <input type="text" name="feedback_message" className="input-type"></input>
               </div>
 
               <div className="buttonform-feedback">
@@ -140,6 +171,9 @@ export default function Feedback() {
             </div>
           </form>
         </div>
+        )}
+
+        
       </div>
     </div>
   );

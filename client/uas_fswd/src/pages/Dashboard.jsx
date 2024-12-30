@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Dashboard() {
-  const [isAdmin] = useState(false);
+  const [isAdmin] = useState(true);
 
   return (
     <div className="container">
@@ -21,7 +21,7 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="full-info">
-                  <Link className="link-full-detail" to="/total_students">Full Detail</Link>
+                  <Link className="link-full-detail" to="/students">Full Detail</Link>
                 </div>
               </div>
 
@@ -33,7 +33,7 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="full-info">
-                  <Link className="link-full-detail" to="/total_rooms">Full Detail</Link>
+                  <Link className="link-full-detail" to="/rooms">Full Detail</Link>
                 </div>
               </div>
 
@@ -93,7 +93,7 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="full-info">
-                <Link className="link-full-detail" to="/total_feedback">Full Detail</Link>
+                <Link className="link-full-detail" to="/feedback">Full Detail</Link>
                 </div>
               </div>
             </div>

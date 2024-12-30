@@ -1,6 +1,6 @@
 // import { useState } from 'react'
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
-import './style/App.css'
+import './style/App.css';
 
 // import pages
 import Register from './pages/Register';
@@ -13,6 +13,10 @@ import RegisteredComplaints from './pages/RegisteredComplaints';
 import Feedback from './pages/feedback';
 import MyProfile from './pages/MyProfile';
 import ChangePassword from './pages/ChangePassword';
+import Rooms from './pages/Rooms';
+import AddRoom from './pages/AddRoom';
+import AddAdmin from './pages/AddAdmin';
+import Students from './pages/Students';
 
 // import components
 import Header from './components/Header';
@@ -21,14 +25,13 @@ import Navbar from './components/Navbar';
 // Import context
 import { AuthProvider } from './context/AuthContext';
 
-
 const Layout = () => {
   return (
     <>
       <Header />
       <div className="container">
-        <Navbar className='navbar' />
-        <Outlet className='outlet' />
+        <Navbar className="navbar" />
+        <Outlet className="outlet" />
       </div>
     </>
   );
@@ -78,6 +81,22 @@ const router = createBrowserRouter([
       {
         path: '/change_password',
         element: <ChangePassword />,
+      },
+      {
+        path: '/rooms',
+        element: <Rooms />,
+      },
+      {
+        path: '/add_room',
+        element: <AddRoom />,
+      },
+      {
+        path: '/add_admin',
+        element: <AddAdmin />,
+      },
+      {
+        path: '/students',
+        element: <Students />,
       },
     ],
   },
