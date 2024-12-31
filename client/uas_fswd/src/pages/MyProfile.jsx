@@ -1,9 +1,48 @@
 import '../style/MyProfile.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function MyProfile() {
-  const [isAdmin] = useState(true);
+  const { user } = useAuth(); // Get user data from context
+  const isAdmin = user && user.role === 'admin'; // Check if the user is an admin
+  const userId = user.id_user; // Ambil ID pengguna dari konteks
+  const navigate = useNavigate(); // Create navigate instance
+
+  const [fullName, setFullName] = useState(user.full_name || '');
+  const [contactNo, setContactNo] = useState(user.contact_no || '');
+  const [email, setEmail] = useState(user.email || '');
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Validasi password jika admin
+    if (isAdmin && newPassword !== confirmNewPassword) {
+      setErrorMessage('New password and confirm password do not match!');
+      return;
+    }
+
+    try {
+      const updatedData = {
+        full_name: fullName,
+        contact_no: contactNo,
+        email,
+        ...(isAdmin && { current_password: currentPassword, new_password: newPassword }), // Hanya kirim password jika admin
+      };
+
+      // Kirim data ke server
+      await axios.put(`http://localhost:5000/users/${userId}`, updatedData);
+      navigate('/');
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('An error occurred while updating the profile.');
+    }
+  };
 
   return (
     <div className="container">
@@ -13,65 +52,51 @@ export default function MyProfile() {
         <div className="formcontainer">
           <p>LAST UPDATED:</p>
 
-          <form className="form" method="post">
-            {isAdmin ? (
-              <div className="fillform">
-                <p>
-                  Admin Id : <input type="text" name="admin_id" id="admin_id" value="" readOnly></input>
-                </p>
-                <p>
-                  Username: <input type="text" name="username" id="username" value=""></input>
-                </p>
-                <p>
-                  Admin Email: <input type="email" name="admin_email" id="admin_email" value=""></input>
-                </p>
-                <p>
-                  Current Password: <input type="password" name="current_password" id="current_password" required></input>
-                </p>
-                <p>
-                  New Password: <input type="password" name="new_password" id="new_password" required></input>
-                </p>
-                <p>
-                  Confirm New Password: <input type="password" name="confirm_new_password" id="confirm_new_password" required></input>
-                </p>
+          <form className="form" onSubmit={handleSubmit}>
+            <div className="fillform">
+              <p>
+                Full Name: <input type="text" name="full_name" id="full_name" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
+              </p>
+              <p>
+                Contact No: <input type="number" name="contact_no" id="contact_no" value={contactNo} onChange={(e) => setContactNo(e.target.value)} required />
+              </p>
+              <p>
+                {isAdmin ? (
+                  <>
+                    Admin Email: <input type="email" name="admin_email" id="admin_email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                  </>
+                ) : (
+                  <>
+                    Email: <input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                  </>
+                )}
+              </p>
 
-                <div className="buttonform">
-                  <button type="reset">
-                    <a href="dashboardadmin.php">Cancel</a>
-                  </button>
-                  <button type="submit" id="submit">
-                    Update
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="fillform">
-                <p>
-                  Registration No: <input type="text" name="registration_no" id="registration_no" value="" readOnly></input>
-                </p>
-                <p>
-                  Full Name: <input type="text" name="full_name" id="full_name" value="" readOnly></input>
-                </p>
-                <p>
-                  Gender: <input type="text" name="gender" id="gender" value="" readOnly></input>
-                </p>
-                <p>
-                  Contact No: <input type="number" name="contact_no" id="contact_no" value="" required></input>
-                </p>
-                <p>
-                  Email: <input type="email" name="email" id="email" value="" readOnly></input>
-                </p>
+              {isAdmin && (
+                <>
+                  <p>
+                    Current Password: <input type="password" name="current_password" id="current_password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required />
+                  </p>
+                  <p>
+                    New Password: <input type="password" name="new_password" id="new_password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
+                  </p>
+                  <p>
+                    Confirm New Password: <input type="password" name="confirm_new_password" id="confirm_new_password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} required />
+                  </p>
+                </>
+              )}
 
-                <div className="buttonform">
-                  <button type="reset">
-                    <Link to="/">Cancel</Link>
-                  </button>
-                  <button type="submit" id="submit">
-                    Update
-                  </button>
-                </div>
+              {errorMessage && <div className="error-message">{errorMessage}</div>}
+
+              <div className="buttonform">
+                <button type="reset">
+                  <Link to="/">Cancel</Link>
+                </button>
+                <button type="submit" id="submit">
+                  Update
+                </button>
               </div>
-            )}
+            </div>
           </form>
         </div>
       </div>

@@ -1,11 +1,10 @@
 import '../style/Navbar.css';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useState } from 'react';
 
 export default function Navbar() {
-  const { isLoggedIn } = useAuth(); // Ambil status login dan data user dari context
-  const [isAdmin] = useState(true)
+  const { isLoggedIn, user } = useAuth(); // Get status login and user data from context
+  const isAdmin = user && user.role === 'admin'; // Check if the user is an admin
 
   return (
     <div className="navbar">

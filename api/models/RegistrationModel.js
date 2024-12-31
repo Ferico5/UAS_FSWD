@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes, Model } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import db from '../config/Database.js';
 
 class Registration extends Model {}
@@ -40,15 +40,5 @@ Registration.init({
   tableName: 'registration',
   freezeTableName: true,
 });
-
-// Jika table tidak ada, maka akan dibuat otomatis
-(async () => {
-  try {
-    await db.sync();
-    console.log("Database synchronized successfully.");
-  } catch (error) {
-    console.error("Error syncing database:", error);
-  }
-})();
 
 export default Registration

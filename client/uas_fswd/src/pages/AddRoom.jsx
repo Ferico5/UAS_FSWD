@@ -1,4 +1,35 @@
+/* eslint-disable no-unused-vars */
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 export default function AddRoom() {
+  const [roomNo, setRoomNo] = useState('');
+  const [seater, setSeater] = useState('');
+  const [feesPerMonth, setFeesPerMonth] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async(e) => {
+    e.preventDefault()
+
+    let remainingSeater = seater;
+
+    try {
+      const response = await axios.post('http://localhost:5000/add_room', {
+        room_no: roomNo,
+        seater,
+        fees_per_month: feesPerMonth,
+        remaining_seater: remainingSeater,
+      })
+
+      if (response.data.msg === 'Room Added!') {
+        navigate('/rooms')
+      }
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
+
   return (
     <div className="container">
       <div className="content">
@@ -6,11 +37,11 @@ export default function AddRoom() {
 
         <div className="container">
           <div className="box">
-            <form className="form" method="post">
+            <form className="form" onSubmit={handleSubmit}>
               <div className="fillform">
                 <p>
                   Select seater :
-                  <select name="select_seater" id="select_seater" required>
+                  <select name="select_seater" id="select_seater" value={seater} onChange={(e) => setSeater(e.target.value)} required>
                     <option value="1" name="1 Seater">
                       1 Seater
                     </option>
@@ -29,14 +60,14 @@ export default function AddRoom() {
                   </select>
                 </p>
                 <p>
-                  Room No : <input type="text" name="room_no" id="room_no" required></input>
+                  Room No : <input type="text" name="room_no" id="room_no" value={roomNo} onChange={(e) => setRoomNo(e.target.value)} required></input>
                 </p>
                 <p>
-                  Fee (per student) : <input type="text" name="fees_per_month" id="fees_per_month" required></input>
+                  Fee (per student) : <input type="text" name="fees_per_month" id="fees_per_month" value={feesPerMonth} onChange={(e) => setFeesPerMonth(e.target.value)} required></input>
                 </p>
                 <div className="buttonform">
                   <button type="reset">
-                    <a href="">Cancel</a>
+                    <Link to="/">Cancel</Link>
                   </button>
                   <button type="submit" id="submit">
                     Add Room

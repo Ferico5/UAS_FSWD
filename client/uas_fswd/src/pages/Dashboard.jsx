@@ -1,9 +1,10 @@
 import '../style/Dashboard.css';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function Dashboard() {
-  const [isAdmin] = useState(true);
+  const { user } = useAuth(); // Get user data from context
+  const isAdmin = user && user.role === 'admin'; // Check if the user is an admin
 
   return (
     <div className="container">

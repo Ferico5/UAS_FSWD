@@ -10,13 +10,14 @@ import BookHostel from './pages/BookHostel';
 import RoomDetails from './pages/RoomDetails';
 import ComplaintRegistration from './pages/ComplaintRegistration';
 import RegisteredComplaints from './pages/RegisteredComplaints';
-import Feedback from './pages/feedback';
+import Feedback from './pages/Feedback';
 import MyProfile from './pages/MyProfile';
 import ChangePassword from './pages/ChangePassword';
 import Rooms from './pages/Rooms';
 import AddRoom from './pages/AddRoom';
 import AddAdmin from './pages/AddAdmin';
 import Students from './pages/Students';
+import UpdateRoom from './pages/UpdateRoom';
 
 // import components
 import Header from './components/Header';
@@ -97,6 +98,10 @@ const router = createBrowserRouter([
       {
         path: '/students',
         element: <Students />,
+      },
+      {
+        path: '/update_room/:id_room',
+        element: <UpdateRoom />,
       },
     ],
   },
