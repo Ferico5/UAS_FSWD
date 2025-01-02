@@ -1,6 +1,12 @@
+.content {
+  /* background-color: blue; */
+  width: 80vw;
+  margin: 1em;
+  padding: 1em;
+}
+
 .content h2 {
-  margin: 0 0 .5em .8em;
-  font-size: 1.7em;
+  margin-bottom: 1.5em;
 }
 
 .box-container {

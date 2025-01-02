@@ -30,7 +30,7 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <div className="container">
+      <div className="main">
         <Navbar className="navbar" />
         <Outlet className="outlet" />
       </div>

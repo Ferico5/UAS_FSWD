@@ -8,9 +8,7 @@
     background-color: #3A4348;
     color: #fff;
     display: flex;
-    padding: .9em 3em;
-    height: 9vh;
-    min-height: 65px;
+    padding: 1em 3em;
     justify-content: space-between;
 }
 

@@ -1,0 +1,42 @@
+.boxheader {
+    background-color: #F3F3EB;
+    padding: .6em;
+}
+
+.boxheader p {
+    color: #BDBDB5;
+    font-weight: 600;
+    font-size: .8em;
+}
+
+.boxinfo {
+    width: 100%;
+    margin-top: 2em;
+    padding-bottom: 1em;
+}
+
+.boxinfo table {
+    width: 100%;
+}
+
+th, td {
+    padding: 9px;
+}
+
+.boxinfo table .blue {
+    color: blue;
+}
+
+.boxinfo table .bigger {
+    font-size: 2em;
+}
+
+.boxinfo table .red {
+    color: red;
+    font-weight: bold;
+    padding: 14px 9px;
+}
+
+.boxinfo table .bold {
+    font-weight: bold;
+}

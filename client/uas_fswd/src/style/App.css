@@ -1,3 +1,28 @@
+body{
+    font-family: Arial;
+    height: 100vh;
+}
+#root{
+    height: 100vh;
+    overflow: hidden;
+}
+.main {
+    display: flex;
+    height: 91vh;
+    overflow: hidden;
+}
 .container {
     display: flex;
+    height: 91vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    display: flex;
+    justify-content: center;
 }
+.content {
+    /* background-color: blue; */
+    width: 80vw;
+    height: fit-content;
+    margin: 1em;
+    padding: 1em;
+  }
