@@ -1,7 +1,102 @@
 import '../style/BookHostel.css';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import axios from 'axios';
 
 export default function BookHostel() {
+  const [rooms, setRooms] = useState([]);
+  const [selectedRoom, setSelectedRoom] = useState(null);
+  const { user } = useAuth();
+  const [formData, setFormData] = useState({
+    room_no: '',
+    food_status: 'Without Food',
+    stay_from: '',
+    duration: '1 Month',
+    course: '',
+    emergency_contact: '',
+    guardian_name: '',
+    guardian_relation: '',
+    guardian_contact_no: '',
+    correspondense_address: '',
+    correspondense_city: '',
+    correspondense_state: 'Indonesia',
+    correspondense_pincode: '',
+  });
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/rooms');
+        const data = response.data;
+        setRooms(data);
+
+        // Set the default selected room to the first available room with remaining_seater > 0
+        const firstAvailableRoom = data.find((room) => room.remaining_seater > 0);
+        if (firstAvailableRoom) {
+          setSelectedRoom(firstAvailableRoom);
+        }
+      } catch (error) {
+        console.error('Error fetching rooms:', error);
+      }
+    };
+
+    fetchRooms();
+  }, []);
+
+  const handleRoomChange = (e) => {
+    const selectedRoom = rooms.find((room) => room.room_no === parseInt(e.target.value));
+    setSelectedRoom(selectedRoom);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const bookingData = {
+      room_no: selectedRoom.room_no,
+      food_status: formData.food_status,
+      stay_from: formData.stay_from,
+      duration: formData.duration,
+      id_user: user.id_user,
+    };
+
+    const personalInfoData = {
+      course: formData.course,
+      emergency_contact: formData.emergency_contact,
+      guardian_name: formData.guardian_name,
+      guardian_relation: formData.guardian_relation,
+      guardian_contact_no: formData.guardian_contact_no,
+      correspondense_address: formData.correspondense_address,
+      correspondense_city: formData.correspondense_city,
+      correspondense_state: formData.correspondense_state,
+      correspondense_pincode: formData.correspondense_pincode,
+      id_user: user.id_user,
+    };
+
+    try {
+      // Send POST request for booking the room
+      const bookingResponse = await axios.post('http://localhost:5000/book_hostel', bookingData, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (bookingResponse.status === 200) {
+        const updatedRoom = {
+        remaining_seater: selectedRoom.remaining_seater - 1,
+      };
+      }
+
+      // Send POST request for personal info
+      await axios.post('http://localhost:5000/personal_info', personalInfoData);
+
+      navigate('/room_details');
+
+    } catch (error) {
+      console.error('Error during submission:', error);
+    }
+  };
+
   return (
     <div className="container">
       <div className="content">
@@ -10,25 +105,30 @@ export default function BookHostel() {
         <div className="formcontainer">
           <p>FILL ALL INFO</p>
 
-          <form className="form" method="post" action="">
+          <form className="form" method="post" onSubmit={handleSubmit}>
             <div className="fillform">
               <h3>Room Related Info</h3>
               <p>
                 Room No:
-                <select name="room_no" id="room_no" required>
-                  <option>Choose Room Number</option>
-                  <option value="">{/* looping pilihan */}</option>
+                <select name="room_no" id="room_no" required onChange={handleRoomChange}>
+                  {rooms
+                    .filter((room) => room.remaining_seater > 0)
+                    .map((room) => (
+                      <option key={room.id_room} value={room.room_no}>
+                        Room {room.room_no} ({room.remaining_seater} seaters remaining)
+                      </option>
+                    ))}
                 </select>
               </p>
               <p>
-                Seater: <input type="text" name="seater" id="seater" readOnly></input>
+                Seater: <input type="text" name="seater" id="seater" value={selectedRoom?.seater || ''} readOnly></input>
               </p>
               <p>
-                Fees Per Month: <input type="text" name="fees_per_month" id="fees_per_month" readOnly></input>
+                Fees Per Month: <input type="text" name="fees_per_month" id="fees_per_month" value={selectedRoom?.fees_per_month || ''} readOnly></input>
               </p>
               <p>
                 Food Status:
-                <select name="food_status" id="food_status">
+                <select name="food_status" id="food_status" onChange={(e) => setFormData({ ...formData, food_status: e.target.value })}>
                   <option value="Without Food" name="without_food">
                     Without Food
                   </option>
@@ -38,11 +138,11 @@ export default function BookHostel() {
                 </select>
               </p>
               <p>
-                Stay From: <input type="date" name="stay_from" id="stayFrom" required></input>
+                Stay From: <input type="date" name="stay_from" id="stayFrom" onChange={(e) => setFormData({ ...formData, stay_from: e.target.value })} required></input>
               </p>
               <p>
                 Duration:
-                <select name="duration" id="duration">
+                <select name="duration" id="duration" onChange={(e) => setFormData({ ...formData, duration: e.target.value })}>
                   <option value="1 Month" name="1 Month">
                     1 Month
                   </option>
@@ -84,46 +184,46 @@ export default function BookHostel() {
 
               <h3>Personal Info</h3>
               <p>
-                Course: <input type="text" name="course" required></input>
+                Course: <input type="text" name="course" onChange={(e) => setFormData({ ...formData, course: e.target.value })} required></input>
               </p>
               <p>
-                Registration No: <input type="text" name="registrationNo" id="registrationNo" value="" readOnly></input>
+                Full Name: <input type="text" name="fullName" id="fullName" value={user?.full_name || ''}  readOnly></input>
               </p>
               <p>
-                Full Name: <input type="text" name="fullName" id="fullName" value="" readOnly></input>
+                Gender: <input type="text" name="gender" id="gender" value={user?.gender || ''} readOnly></input>
               </p>
               <p>
-                Gender: <input type="text" name="gender" id="gender" value="" readOnly></input>
+                Contact No: <input type="text" name="contactNo" id="contactNo" value={user?.contact_no || ''} readOnly></input>
               </p>
               <p>
-                Contact No: <input type="text" name="contactNo" id="contactNo" value="" readOnly></input>
+                Emergency Contact: <input type="text" name="emergencyContact" onChange={(e) => setFormData({ ...formData, emergency_contact: e.target.value })} required></input>
               </p>
               <p>
-                Emergency Contact: <input type="text" name="emergencyContact" required></input>
+                Guardian Name: <input type="text" name="guardianName" onChange={(e) => setFormData({ ...formData, guardian_name: e.target.value })} required></input>
               </p>
               <p>
-                Guardian Name: <input type="text" name="guardianName" required></input>
+                Guardian Relation: <input type="text" name="guardianRelation" onChange={(e) => setFormData({ ...formData, guardian_relation: e.target.value })} required></input>
               </p>
               <p>
-                Guardian Relation: <input type="text" name="guardianRelation" required></input>
-              </p>
-              <p>
-                Guardian Contact No: <input type="number" name="guardianContactNo" required></input>
+                Guardian Contact No: <input type="number" name="guardianContactNo" onChange={(e) => setFormData({ ...formData, guardian_contact_no: e.target.value })} required></input>
               </p>
 
               <h3>Correspondense Address</h3>
               <p>
-                Address: <input type="text" name="correspondenseAddress" required></input>
+                Address: <input type="text" name="correspondenseAddress" onChange={(e) => setFormData({ ...formData, correspondense_address: e.target.value })} required></input>
               </p>
               <p>
-                City: <input type="text" name="correspondenseCity" required></input>
+                City: <input type="text" name="correspondenseCity" onChange={(e) => setFormData({ ...formData, correspondense_city: e.target.value })} required></input>
               </p>
               <p>
                 State:
-                <select name="correspondenseState" id="correspondenseState" required></select>
+                <select name="correspondenseState" id="correspondenseState" onChange={(e) => setFormData({ ...formData, correspondense_state: e.target.value })} required>
+                  <option value="indonesia">Indonesia</option>
+                  <option value="malaysia">Malaysia</option>
+                </select>
               </p>
               <p>
-                Pincode: <input type="text" name="pincode" required></input>
+                Pincode: <input type="text" name="pincode" onChange={(e) => setFormData({ ...formData, correspondense_pincode: e.target.value })} required></input>
               </p>
 
               <div className="buttonform">

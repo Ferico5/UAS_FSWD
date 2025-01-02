@@ -10,8 +10,9 @@ RoomInfo.init({
     primaryKey: true,
   },
   room_no: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false,
+    unique: true,
   },
   seater: {
     type: DataTypes.INTEGER,

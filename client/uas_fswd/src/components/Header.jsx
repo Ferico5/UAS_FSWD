@@ -16,11 +16,14 @@ export default function Header() {
 
           <div className="login-header">
             <div className="user-name">
-              <h1>{user.full_name}</h1> {/* Menampilkan nama user */}
+              <h1>{user?.full_name}</h1>
             </div>
 
             <div className="logout">
-              <a href="/login" onClick={logout}>Logout</a> {/* Logout user */}
+              <a href="/login" onClick={logout}>
+                Logout
+              </a>{' '}
+              {/* Logout user */}
             </div>
           </div>
         </div>

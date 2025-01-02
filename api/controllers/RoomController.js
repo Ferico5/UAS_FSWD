@@ -18,18 +18,18 @@ export const getRoom = async (req, res) => {
   }
 }
 
-export const getRoomById = async(req, res) => {
+export const getRoomByRoomNo = async(req, res) => {
   try {
     const response = await Room.findOne({
       where: {
-        id_room: req.params.id_room
+        room_no: req.params.room_no
       }
-    })
-    res.status(200).json(response)
+    });
+    res.status(200).json(response);
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
-}
+};
 
 export const updateRoom = async(req, res) => {
   try {

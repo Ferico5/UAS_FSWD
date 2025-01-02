@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 
 // Membuat context untuk status login
 const AuthContext = createContext();
@@ -9,12 +9,41 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
+  // Inisialisasi status login dari localStorage
+  useEffect(() => {
+    const storedLoginStatus = localStorage.getItem('isLoggedIn') === 'true';
+    const storedUserData = localStorage.getItem('userData');
+
+    if (storedLoginStatus && storedUserData) {
+      try {
+        const parsedUserData = JSON.parse(storedUserData);
+        setIsLoggedIn(true);
+        setUser(parsedUserData);
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+        // Jika terjadi error, hapus data lokal yang rusak
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userData');
+      }
+    }
+  }, []);
+
+  // Fungsi login
   const login = (userData) => {
-    setIsLoggedIn(true);
-    setUser(userData);
+    try {
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userData', JSON.stringify(userData));
+      setIsLoggedIn(true);
+      setUser(userData);
+    } catch (error) {
+      console.error('Error saving login data:', error);
+    }
   };
 
+  // Fungsi logout
   const logout = () => {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userData');
     setIsLoggedIn(false);
     setUser(null);
   };
