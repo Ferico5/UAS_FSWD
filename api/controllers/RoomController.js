@@ -35,7 +35,7 @@ export const updateRoom = async(req, res) => {
   try {
     await Room.update(req.body, {
       where: {
-        id_room: req.params.id_room
+        room_no: req.params.room_no
       }
     })
     res.status(200).json({msg: 'Room Updated!'})

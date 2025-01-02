@@ -25,6 +25,10 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('userData');
       }
+    } else {
+      if (!window.location.pathname.includes('/login')) {
+        window.location.replace('/login');
+      }
     }
   }, []);
 
@@ -48,11 +52,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  return (
-    <AuthContext.Provider value={{ isLoggedIn, user, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ isLoggedIn, user, login, logout }}>{children}</AuthContext.Provider>;
 };
 
 // Hook untuk menggunakan AuthContext

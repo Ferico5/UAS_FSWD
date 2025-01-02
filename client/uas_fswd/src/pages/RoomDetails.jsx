@@ -10,26 +10,36 @@ export default function RoomDetails() {
   const [registrationDetails, setRegistrationDetails] = useState(null);
   const [roomDetails, setRoomDetails] = useState(null);
 
+  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (user) {
           // Fetch booking details
           const bookingResponse = await axios.get(`http://localhost:5000/book_hostel/${user.id_user}`);
-          const bookingData = bookingResponse.data[0]; // Ambil booking pertama
-          setBookingDetails(bookingData);
+          setBookingDetails(bookingResponse.data[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-          // Fetch room details berdasarkan ID room
-          if (bookingData) {
-            const roomResponse = await axios.get(`http://localhost:5000/rooms/${bookingData.room_no}`);
-            setRoomDetails(roomResponse.data);
-          }
-
+    const fetchPersonalInfo = async () => {
+      try {
+        if (user) {
           // Fetch personal info
           const personalInfoResponse = await axios.get(`http://localhost:5000/personal_info/${user.id_user}`);
           setPersonalInfo(personalInfoResponse.data[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-          // Fetch registration details
+    const fetchRegistration = async () => {
+      try {
+        if (user) {
           const registrationResponse = await axios.get(`http://localhost:5000/users/${user.id_user}`);
           setRegistrationDetails(registrationResponse.data);
         }
@@ -39,7 +49,21 @@ export default function RoomDetails() {
     };
 
     fetchData();
+    fetchPersonalInfo();
+    fetchRegistration();
   }, [user]);
+
+  useEffect(() => {
+    const fetchRoom = async () => {
+      // Fetch room details berdasarkan ID room
+      if (bookingDetails) {
+        const roomResponse = await axios.get(`http://localhost:5000/rooms/${bookingDetails.room_no}`);
+        setRoomDetails(roomResponse.data);
+      }
+    };
+
+    fetchRoom();
+  }, [bookingDetails, user]);
 
   console.log(bookingDetails, personalInfo, registrationDetails);
 

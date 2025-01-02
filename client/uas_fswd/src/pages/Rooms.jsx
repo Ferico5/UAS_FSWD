@@ -64,10 +64,10 @@ export default function Rooms() {
                       <td id="center">{room.fees_per_month}</td>
                       <td id="center">{room.remaining_seater}</td>
                       <td id="center">
-                        <Link to={`/update_room/${room.id_room}`}><button>Update</button></Link>
+                        <Link to={`/update_room/${room.room_no}`}><button>Update</button></Link>
                       </td>
                       <td id="center">
-                        <button onClick={() => deleteRoom(room.id_room)}>Delete</button>
+                        <button onClick={() => deleteRoom(room.room_no)}>Delete</button>
                       </td>
                     </tr>
                   ))}
