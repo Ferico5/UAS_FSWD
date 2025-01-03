@@ -5,10 +5,11 @@ import { useState } from 'react';
 import axios from 'axios';
 
 export default function MyProfile() {
-  const { user } = useAuth(); // Get user data from context
-  const isAdmin = user && user.role === 'admin'; // Check if the user is an admin
-  const userId = user.id_user; // Ambil ID pengguna dari konteks
-  const navigate = useNavigate(); // Create navigate instance
+  const { user, setUser } = useAuth();
+  const isAdmin = user && user.role === 'admin';
+  const userId = user.id_user;
+  console.log(userId);
+  const navigate = useNavigate();
 
   const [fullName, setFullName] = useState(user.full_name || '');
   const [contactNo, setContactNo] = useState(user.contact_no || '');
@@ -37,6 +38,7 @@ export default function MyProfile() {
 
       // Kirim data ke server
       await axios.put(`http://localhost:5000/users/${userId}`, updatedData);
+      setUser({ ...user, full_name: fullName, contact_no: contactNo, email });
       navigate('/');
     } catch (error) {
       console.error(error);

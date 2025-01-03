@@ -33,11 +33,13 @@ export default function BookHostel() {
         const data = response.data;
         setRooms(data);
 
-        // Set the default selected room to the first available room with remaining_seater > 0
-        const firstAvailableRoom = data.find((room) => room.remaining_seater > 0);
-        if (firstAvailableRoom) {
-          setSelectedRoom(firstAvailableRoom);
-          updateRoomNo(firstAvailableRoom.room_no)
+        // Only set the default room if there's no room selected yet
+        if (!selectedRoom) {
+          const firstAvailableRoom = data.find((room) => room.remaining_seater > 0);
+          if (firstAvailableRoom) {
+            setSelectedRoom(firstAvailableRoom);
+            updateRoomNo(firstAvailableRoom.room_no);
+          }
         }
       } catch (error) {
         console.error('Error fetching rooms:', error);
@@ -48,9 +50,11 @@ export default function BookHostel() {
   }, [updateRoomNo]);
 
   const handleRoomChange = (e) => {
-    const selectedRoom = rooms.find((room) => room.room_no === parseInt(e.target.value));
-    setSelectedRoom(selectedRoom);
-    updateRoomNo(selectedRoom.room_no)
+    const room = rooms.find((room) => room.room_no === parseInt(e.target.value));
+    setSelectedRoom(room);
+    if (room) {
+      updateRoomNo(room.room_no);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -63,6 +67,8 @@ export default function BookHostel() {
       duration: formData.duration,
       id_user: user.id_user,
     };
+
+    console.log('data dari handlesubmit', bookingData);
 
     const personalInfoData = {
       course: formData.course,
@@ -84,16 +90,17 @@ export default function BookHostel() {
       });
 
       if (bookingResponse.status === 200) {
-        const updatedRoom = {
-        remaining_seater: selectedRoom.remaining_seater - 1,
-      };
+        // Update the remaining_seater count in the database
+        await axios.put('http://localhost:5000/update_room', {
+          room_no: selectedRoom.room_no,
+          remaining_seater: selectedRoom.remaining_seater - 1
+        });
       }
 
       // Send POST request for personal info
       await axios.post('http://localhost:5000/personal_info', personalInfoData);
 
       navigate('/room_details');
-
     } catch (error) {
       console.error('Error during submission:', error);
     }
@@ -189,7 +196,7 @@ export default function BookHostel() {
                 Course: <input type="text" name="course" onChange={(e) => setFormData({ ...formData, course: e.target.value })} required></input>
               </p>
               <p>
-                Full Name: <input type="text" name="fullName" id="fullName" value={user?.full_name || ''}  readOnly></input>
+                Full Name: <input type="text" name="fullName" id="fullName" value={user?.full_name || ''} readOnly></input>
               </p>
               <p>
                 Gender: <input type="text" name="gender" id="gender" value={user?.gender || ''} readOnly></input>

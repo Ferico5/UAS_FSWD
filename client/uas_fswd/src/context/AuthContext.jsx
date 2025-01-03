@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
-  return <AuthContext.Provider value={{ isLoggedIn, user, login, logout, updateRoomNo }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ isLoggedIn, user, login, logout, updateRoomNo, setUser }}>{children}</AuthContext.Provider>;
 };
 
 // Hook untuk menggunakan AuthContext

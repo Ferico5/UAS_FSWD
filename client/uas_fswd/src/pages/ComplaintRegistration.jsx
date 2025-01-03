@@ -10,23 +10,49 @@ export default function ComplaintRegistration() {
   const [roomNo, setRoomNo] = useState('');
   const [complaintType, setComplaintType] = useState('Food related');
   const [explainComplaint, setExplainComplaint] = useState('');
+  const [bookingDates, setBookingDates] = useState([]); // Array untuk menyimpan data booking
+  const [selectedBooking, setSelectedBooking] = useState('');
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchRoomNo = async () => {
+    const fetchBookingData = async () => {
       try {
         if (user) {
-          const response = await axios.get(`http://localhost:5000/complaint_room_no/${user.id_user}`);
-          setRoomNo(response.data.room_no);
+          const response = await axios.get(`http://localhost:5000/book_hostel/${user.id_user}`);
+          const bookings = response.data;
+
+          // Convert to formatted date
+          const bookingOptions = bookings.map((booking) => {
+            const date = new Date(booking.stay_from);
+            const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+
+            return {
+              room_no: booking.room_no,
+              booking_date: formattedDate, // Use formatted date for the dropdown
+              stay_from: booking.stay_from,
+            };
+          });
+
+          setBookingDates(bookingOptions); // Set booking data to state
+          setSelectedBooking(bookingOptions[0]?.booking_date || ''); // Set the default selected booking date
         }
       } catch (err) {
-        console.error('Error fetching room number:', err);
+        console.error('Error fetching booking data:', err);
       }
     };
 
-    fetchRoomNo();
+    fetchBookingData();
   }, [user]);
+
+  const handleBookingChange = (e) => {
+    const selectedDate = e.target.value;
+    setSelectedBooking(selectedDate);
+
+    // Find the room number based on the selected booking date
+    const selectedBookingData = bookingDates.find((booking) => booking.booking_date === selectedDate);
+    setRoomNo(selectedBookingData ? selectedBookingData.room_no : '');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +61,7 @@ export default function ComplaintRegistration() {
       if (user && roomNo) {
         await axios.post('http://localhost:5000/register_complaint', {
           id_user: user.id_user,
-          room_no: user.room_no,
+          room_no: roomNo,
           complaint_type: complaintType,
           explain_complaint: explainComplaint,
           complaint_status: 'Unprocessed',
@@ -57,6 +83,18 @@ export default function ComplaintRegistration() {
           <div>
             <form className="form-complaint" onSubmit={handleSubmit}>
               <div className="fillform-complaint">
+                <p>
+                  Booking Date:
+                  <select name="booking_date" id="booking_date" value={selectedBooking} onChange={handleBookingChange} required>
+                    <option value="">Select Booking Date</option>
+                    {bookingDates.map((booking, index) => (
+                      <option key={index} value={booking.booking_date}>
+                        {booking.booking_date} - Room {booking.room_no}
+                      </option>
+                    ))}
+                  </select>
+                </p>
+
                 <p>
                   Complaint Type:
                   <select name="complaint_type" id="complaint_type" value={complaintType} onChange={(e) => setComplaintType(e.target.value)} required>
