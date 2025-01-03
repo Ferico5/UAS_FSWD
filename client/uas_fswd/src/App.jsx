@@ -18,6 +18,7 @@ import AddRoom from './pages/AddRoom';
 import AddAdmin from './pages/AddAdmin';
 import Students from './pages/Students';
 import UpdateRoom from './pages/UpdateRoom';
+import FeedbackDetail from './pages/FeedbackDetail'
 
 // import components
 import Header from './components/Header';
@@ -106,6 +107,10 @@ const router = createBrowserRouter([
       {
         path: '/update_room/:id_room',
         element: <UpdateRoom />,
+      },
+      {
+        path: '/feedback/:id_feedback',
+        element: <FeedbackDetail />,
       },
     ],
   },

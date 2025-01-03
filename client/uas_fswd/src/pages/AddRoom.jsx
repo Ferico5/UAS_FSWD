@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export default function AddRoom() {
   const [roomNo, setRoomNo] = useState('');
-  const [seater, setSeater] = useState('');
+  const [seater, setSeater] = useState(1);
   const [feesPerMonth, setFeesPerMonth] = useState('');
   const navigate = useNavigate();
 

@@ -90,7 +90,7 @@ export default function UpdateRoom() {
                 </p>
                 <div className="buttonform">
                   <button type="reset">
-                    <Link to="/">Cancel</Link>
+                    <Link to="/rooms">Cancel</Link>
                   </button>
                   <button type="submit" id="submit">
                     Update Room
