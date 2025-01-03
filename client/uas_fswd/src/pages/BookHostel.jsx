@@ -7,7 +7,7 @@ import axios from 'axios';
 export default function BookHostel() {
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
-  const { user } = useAuth();
+  const { user, updateRoomNo } = useAuth();
   const [formData, setFormData] = useState({
     room_no: '',
     food_status: 'Without Food',
@@ -37,6 +37,7 @@ export default function BookHostel() {
         const firstAvailableRoom = data.find((room) => room.remaining_seater > 0);
         if (firstAvailableRoom) {
           setSelectedRoom(firstAvailableRoom);
+          updateRoomNo(firstAvailableRoom.room_no)
         }
       } catch (error) {
         console.error('Error fetching rooms:', error);
@@ -44,11 +45,12 @@ export default function BookHostel() {
     };
 
     fetchRooms();
-  }, []);
+  }, [updateRoomNo]);
 
   const handleRoomChange = (e) => {
     const selectedRoom = rooms.find((room) => room.room_no === parseInt(e.target.value));
     setSelectedRoom(selectedRoom);
+    updateRoomNo(selectedRoom.room_no)
   };
 
   const handleSubmit = async (e) => {

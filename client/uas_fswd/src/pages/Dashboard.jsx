@@ -58,7 +58,7 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="full-info">
-                  <Link className="link-full-detail" to="/new_complaints">Full Detail</Link>
+                  <Link className="link-full-detail" to="/registered_complaints/new_complaints">Full Detail</Link>
                 </div>
               </div>
 
@@ -70,7 +70,7 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="full-info">
-                  <Link className="link-full-detail" to="/in_process_complaints">Full Detail</Link>
+                  <Link className="link-full-detail" to="/registered_complaints/in_process_complaints">Full Detail</Link>
                 </div>
               </div>
 
@@ -82,7 +82,7 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="full-info">
-                <Link className="link-full-detail" to="/closed_complaints">Full Detail</Link>
+                <Link className="link-full-detail" to="/registered_complaints/closed_complaints">Full Detail</Link>
                 </div>
               </div>
 

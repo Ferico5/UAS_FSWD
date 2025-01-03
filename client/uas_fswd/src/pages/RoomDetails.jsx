@@ -65,8 +65,6 @@ export default function RoomDetails() {
     fetchRoom();
   }, [bookingDetails, user]);
 
-  console.log(bookingDetails, personalInfo, registrationDetails);
-
   if (!bookingDetails || !personalInfo || !registrationDetails) {
     return <div>Loading...</div>; // Tampilkan loading jika data belum tersedia
   }

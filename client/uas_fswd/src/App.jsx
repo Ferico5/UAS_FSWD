@@ -72,6 +72,10 @@ const router = createBrowserRouter([
         element: <RegisteredComplaints />,
       },
       {
+        path: '/registered_complaints/:status',
+        element: <RegisteredComplaints />,
+      },
+      {
         path: '/feedback',
         element: <Feedback />,
       },

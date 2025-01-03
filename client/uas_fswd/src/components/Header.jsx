@@ -31,7 +31,7 @@ export default function Header() {
         <div className="header">
           <div className="title-header">
             <h1>
-              <a href="/">Unpri Hostel</a>
+              <a href="">Unpri Hostel</a>
             </h1>
           </div>
         </div>

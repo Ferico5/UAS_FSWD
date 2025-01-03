@@ -9,16 +9,16 @@ export const addBookRoom = async (req, res) => {
   }
 };
 
-export const getBookRoomByIdUser = async(req, res) => {
-    try {
-        const { id_user } = req.params;
-        const response = await BookRoom.findAll({
-            where: {
-                id_user: id_user
-            }
-        })
-        res.status(200).json(response)
-    } catch (error) {
-        console.log(error.message)
-    }
-}
+export const getBookRoomByIdUser = async (req, res) => {
+  try {
+    const { id_user } = req.params;
+    const response = await BookRoom.findAll({
+      where: {
+        id_user: id_user,
+      },
+    });
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error.message);
+  }
+};

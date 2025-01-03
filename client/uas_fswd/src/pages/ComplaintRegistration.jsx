@@ -1,7 +1,53 @@
 import '../style/ComplaintRegistration.css';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import axios from 'axios';
 
 export default function ComplaintRegistration() {
+  const { user } = useAuth();
+
+  const [roomNo, setRoomNo] = useState('');
+  const [complaintType, setComplaintType] = useState('Food related');
+  const [explainComplaint, setExplainComplaint] = useState('');
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchRoomNo = async () => {
+      try {
+        if (user) {
+          const response = await axios.get(`http://localhost:5000/complaint_room_no/${user.id_user}`);
+          setRoomNo(response.data.room_no);
+        }
+      } catch (err) {
+        console.error('Error fetching room number:', err);
+      }
+    };
+
+    fetchRoomNo();
+  }, [user]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (user && roomNo) {
+        await axios.post('http://localhost:5000/register_complaint', {
+          id_user: user.id_user,
+          room_no: user.room_no,
+          complaint_type: complaintType,
+          explain_complaint: explainComplaint,
+          complaint_status: 'Unprocessed',
+        });
+
+        navigate('/registered_complaints');
+      }
+    } catch (err) {
+      console.error('Error submitting complaint:', err);
+    }
+  };
+
   return (
     <div className="container">
       <div className="content">
@@ -9,11 +55,11 @@ export default function ComplaintRegistration() {
 
         <div>
           <div>
-            <form className="form-complaint" method="post">
+            <form className="form-complaint" onSubmit={handleSubmit}>
               <div className="fillform-complaint">
                 <p>
                   Complaint Type:
-                  <select name="complaint_type" id="complaint_type" required>
+                  <select name="complaint_type" id="complaint_type" value={complaintType} onChange={(e) => setComplaintType(e.target.value)} required>
                     <option value="Food related" name="food_related">
                       Food Related
                     </option>
@@ -38,7 +84,7 @@ export default function ComplaintRegistration() {
                   </select>
                 </p>
                 <p>
-                  Explain the Complaint: <input type="textarea" name="explain_complaint" id="explain_complaint" required></input>
+                  Explain the Complaint: <input type="textarea" name="explain_complaint" id="explain_complaint" value={explainComplaint} onChange={(e) => setExplainComplaint(e.target.value)} required></input>
                 </p>
                 <div className="buttonform">
                   <button type="reset">
