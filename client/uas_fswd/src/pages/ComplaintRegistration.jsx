@@ -10,7 +10,7 @@ export default function ComplaintRegistration() {
   const [roomNo, setRoomNo] = useState('');
   const [complaintType, setComplaintType] = useState('Food related');
   const [explainComplaint, setExplainComplaint] = useState('');
-  const [bookingDates, setBookingDates] = useState([]); // Array untuk menyimpan data booking
+  const [bookingDates, setBookingDates] = useState([]);
   const [selectedBooking, setSelectedBooking] = useState('');
 
   const navigate = useNavigate();
@@ -35,7 +35,10 @@ export default function ComplaintRegistration() {
           });
 
           setBookingDates(bookingOptions); // Set booking data to state
-          setSelectedBooking(bookingOptions[0]?.booking_date || ''); // Set the default selected booking date
+          if (bookingOptions.length > 0) {
+            setSelectedBooking(bookingOptions[0].booking_date);
+            setRoomNo(bookingOptions[0].room_no); // Sinkronkan roomNo dengan pilihan default
+          }
         }
       } catch (err) {
         console.error('Error fetching booking data:', err);
@@ -86,7 +89,6 @@ export default function ComplaintRegistration() {
                 <p>
                   Booking Date:
                   <select name="booking_date" id="booking_date" value={selectedBooking} onChange={handleBookingChange} required>
-                    <option value="">Select Booking Date</option>
                     {bookingDates.map((booking, index) => (
                       <option key={index} value={booking.booking_date}>
                         {booking.booking_date} - Room {booking.room_no}

@@ -48,7 +48,6 @@ export default function RegisteredComplaints() {
     }
   }, [user, status, isAdmin]);
 
-
   return (
     <div className="container">
       <div className="content">
@@ -72,20 +71,27 @@ export default function RegisteredComplaints() {
                   </tr>
                 </thead>
                 <tbody>
-                  {complaints.map((complaint, index) => (
-                    <tr key={complaint.register_complaint_id}>
-                      <td id='center'>{index + 1}</td>
-                      <td id='center'>{complaint.room_no}</td>
-                      <td>{complaint.complaint_type}</td>
-                      <td id='center'>{complaint.complaint_status}</td>
-                      <td>{complaint.createdAt}</td>
-                      <td id="center">
-                        <a href="#">
-                          <button>Action</button>
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
+                  {complaints.map((complaint, index) => {
+                    // Format tanggal
+                    const date = new Date(complaint.createdAt);
+                    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+                    const formattedTime = date.toTimeString().split(' ')[0]; // Ambil waktu jam:menit:detik
+
+                    return (
+                      <tr key={complaint.register_complaint_id}>
+                        <td id="center">{index + 1}</td>
+                        <td id="center">{complaint.room_no}</td>
+                        <td>{complaint.complaint_type}</td>
+                        <td id="center">{complaint.complaint_status}</td>
+                        <td>{`${formattedDate} ${formattedTime}`}</td>
+                        <td id="center">
+                          <a href="#">
+                            <button>Action</button>
+                          </a>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

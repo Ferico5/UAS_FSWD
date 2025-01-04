@@ -65,6 +65,20 @@ export default function RoomDetails() {
     fetchRoom();
   }, [bookingDetails, user]);
 
+  // Format dates
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+    return formattedDate;
+  };
+
+  const formatDateTime = (dateString) => {
+    const date = new Date(dateString);
+    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+    const formattedTime = date.toTimeString().split(' ')[0]; // Get time in HH:MM:SS format
+    return `${formattedDate} ${formattedTime}`;
+  };
+
   if (!bookingDetails || !personalInfo || !registrationDetails) {
     return <div>Loading...</div>; // Tampilkan loading jika data belum tersedia
   }
@@ -94,7 +108,7 @@ export default function RoomDetails() {
                     <td className="bold">Registration Number :</td>
                     <td>{bookingDetails.id_user}</td>
                     <td className="bold">Apply Date :</td>
-                    <td colSpan="3">{bookingDetails.createdAt}</td>
+                    <td colSpan="3">{formatDateTime(bookingDetails.createdAt)}</td>
                   </tr>
                   <tr>
                     <td className="bold">Room no :</td>
@@ -108,7 +122,7 @@ export default function RoomDetails() {
                     <td className="bold">Food Status :</td>
                     <td>{bookingDetails.food_status}</td>
                     <td className="bold">Stay From :</td>
-                    <td>{bookingDetails.stay_from}</td>
+                    <td>{formatDate(bookingDetails.stay_from)}</td>
                     <td className="bold">Duration : </td>
                     <td>{bookingDetails.duration}</td>
                   </tr>

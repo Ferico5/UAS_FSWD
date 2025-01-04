@@ -9,7 +9,7 @@ export const addRegisterComplaint = async (req, res) => {
 
     // Cek apakah user dan room valid
     const user = await Registration.findByPk(id_user);  // Cari user berdasarkan id_user
-    const room = await BookRoom.findByPk(room_no);  // Cari room berdasarkan room_no
+    const room = await BookRoom.findOne({ where: { room_no, id_user } });
 
     // Pastikan user dan room ada
     if (!user || !room) {
