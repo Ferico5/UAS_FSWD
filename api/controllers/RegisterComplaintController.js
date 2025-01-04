@@ -4,51 +4,51 @@ import BookRoom from '../models/BookRoomModel.js';
 
 export const countComplaint = async (req, res) => {
   try {
-    const count = await RegisterComplaint.count()
-    res.status(200).json({count})
+    const count = await RegisterComplaint.count();
+    res.status(200).json({ count });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
-}
+};
 
 export const countNewComplaint = async (req, res) => {
   try {
     const count = await RegisterComplaint.count({
       where: {
-        complaint_status: 'Unprocessed'
-      }
-    })
-    res.status(200).json({count})
+        complaint_status: 'Unprocessed',
+      },
+    });
+    res.status(200).json({ count });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
-}
+};
 
 export const countInProcessComplaint = async (req, res) => {
   try {
     const count = await RegisterComplaint.count({
       where: {
-        complaint_status: 'In Process'
-      }
-    })
-    res.status(200).json({count})
+        complaint_status: 'In Process',
+      },
+    });
+    res.status(200).json({ count });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
-}
+};
 
 export const countClosedComplaint = async (req, res) => {
   try {
     const count = await RegisterComplaint.count({
       where: {
-        complaint_status: 'Closed'
-      }
-    })
-    res.status(200).json({count})
+        complaint_status: 'Closed',
+      },
+    });
+    res.status(200).json({ count });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
-}
+};
 
 export const addRegisterComplaint = async (req, res) => {
   try {
@@ -56,7 +56,7 @@ export const addRegisterComplaint = async (req, res) => {
     const { id_user, room_no, complaint_type, explain_complaint, complaint_status } = req.body;
 
     // Cek apakah user dan room valid
-    const user = await Registration.findByPk(id_user);  // Cari user berdasarkan id_user
+    const user = await Registration.findByPk(id_user); // Cari user berdasarkan id_user
     const room = await BookRoom.findOne({ where: { room_no, id_user } });
 
     // Pastikan user dan room ada
@@ -111,51 +111,72 @@ export const getUnprocessedRegisterComplaint = async (req, res) => {
   try {
     const response = await RegisterComplaint.findAll({
       where: {
-        complaint_status: 'Unprocessed'
-      }
-    })
-    res.status(200).json(response)
+        complaint_status: 'Unprocessed',
+      },
+    });
+    res.status(200).json(response);
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
-}
+};
 
 export const getInProcessRegisterComplaint = async (req, res) => {
   try {
     const response = await RegisterComplaint.findAll({
       where: {
-        complaint_status: 'In Process'
-      }
-    })
-    res.status(200).json(response)
+        complaint_status: 'In Process',
+      },
+    });
+    res.status(200).json(response);
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
-}
+};
 
 export const getClosedRegisterComplaint = async (req, res) => {
   try {
     const response = await RegisterComplaint.findAll({
       where: {
-        complaint_status: 'Closed'
-      }
-    })
-    res.status(200).json(response)
+        complaint_status: 'Closed',
+      },
+    });
+    res.status(200).json(response);
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
-}
+};
 
 export const getDetailComplaintByIdComplaint = async (req, res) => {
   const { register_complaint_id } = req.params;
   try {
     const response = await RegisterComplaint.findOne({
       where: {
-        register_complaint_id: register_complaint_id
-      }
-    })
-    res.status(200).json(response)
+        register_complaint_id: register_complaint_id,
+      },
+    });
+    res.status(200).json(response);
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
   }
-}
+};
+
+export const updateComplaintStatusByIdComplaint = async (req, res) => {
+  const { register_complaint_id } = req.params;
+  const { complaint_status } = req.body;
+
+  try {
+    const response = await RegisterComplaint.update(
+      {
+        complaint_status,
+      },
+      {
+        where: {
+          register_complaint_id: register_complaint_id,
+        },
+      }
+    );
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error.message);
+  }
+};

@@ -114,13 +114,13 @@ export default function RoomDetails() {
                   {/* looping */}
                   <tr>
                     <td className="bold">Registration Number :</td>
-                    <td>{bookingDetails[currentPage].id_user}</td>
+                    <td>{bookingDetails[currentPage]?.id_user}</td>
                     <td className="bold">Apply Date :</td>
-                    <td colSpan="3">{formatDateTime(bookingDetails.createdAt)}</td>
+                    <td colSpan="3">{formatDateTime(bookingDetails[currentPage]?.createdAt)}</td>
                   </tr>
                   <tr>
                     <td className="bold">Room no :</td>
-                    <td>{bookingDetails[currentPage].room_no}</td>
+                    <td>{bookingDetails[currentPage]?.room_no}</td>
                     <td className="bold">Seater :</td>
                     <td>{roomDetails?.seater || 'N/A'}</td>
                     <td className="bold">Fees PM : </td>
@@ -128,24 +128,25 @@ export default function RoomDetails() {
                   </tr>
                   <tr>
                     <td className="bold">Food Status :</td>
-                    <td>{bookingDetails[currentPage].food_status}</td>
+                    <td>{bookingDetails[currentPage]?.food_status}</td>
                     <td className="bold">Stay From :</td>
-                    <td>{formatDate(bookingDetails[currentPage].stay_from)}</td>
+                    <td>{formatDate(bookingDetails[currentPage]?.stay_from)}</td>
                     <td className="bold">Duration : </td>
-                    <td>{bookingDetails[currentPage].duration}</td>
+                    <td>{bookingDetails[currentPage]?.duration}</td>
                   </tr>
                   <tr>
                     <td className="bold">Hostel Fee :</td>
                     <td>{(parseInt(roomDetails?.fees_per_month) || 0) * (parseInt(bookingDetails[currentPage]?.duration) || 0)}</td>
                     <td className="bold">Food Fee :</td>
-                    <td id="food_fee">{bookingDetails[currentPage].food_status === 'With Food' ? '350000' : '0'}</td>
+                    <td id="food_fee">{bookingDetails[currentPage]?.food_status === 'With Food' ? '350000' : '0'}</td>
                     <td className="bold">Total Food Fee :</td>
-                    <td id="food_fee">{(bookingDetails[currentPage].food_status === 'With Food' ? 350000 : 0) * (parseInt(bookingDetails?.duration) || 0)}</td>
+                    <td id="food_fee">{bookingDetails[currentPage]?.food_status === 'With Food' ? 350000 * (parseInt(bookingDetails[currentPage]?.duration) || 0) : 0}</td>
                   </tr>
                   <tr>
                     <td className="bold">Total Fee :</td>
                     <td colSpan="5" id="total_fee">
-                      {(parseInt(roomDetails?.fees_per_month) || 0) * (parseInt(bookingDetails[currentPage]?.duration) || 0) + (bookingDetails[currentPage].food_status === 'With Food' ? 350000 : 0) * (parseInt(bookingDetails[currentPage]?.duration) || 0)}
+                      {(parseInt(roomDetails?.fees_per_month) || 0) * (parseInt(bookingDetails[currentPage]?.duration) || 0) +
+                        (bookingDetails[currentPage]?.food_status === 'With Food' ? 350000 : 0) * (parseInt(bookingDetails[currentPage]?.duration) || 0)}
                     </td>
                   </tr>
                   <tr>
@@ -155,31 +156,31 @@ export default function RoomDetails() {
                   </tr>
                   <tr>
                     <td className="bold">Registration No :</td>
-                    <td>{personalInfo[currentPage].id_personal_info}</td>
+                    <td>{personalInfo[currentPage]?.id_personal_info}</td>
                     <td className="bold">Full Name :</td>
-                    <td>{registrationDetails.full_name}</td>
+                    <td>{registrationDetails?.full_name}</td>
                     <td className="bold">Email : </td>
-                    <td>{registrationDetails.email}</td>
+                    <td>{registrationDetails?.email}</td>
                   </tr>
                   <tr>
                     <td className="bold">Contact No :</td>
-                    <td>{registrationDetails.contact_no}</td>
+                    <td>{registrationDetails?.contact_no}</td>
                     <td className="bold">Gender :</td>
-                    <td>{registrationDetails.gender}</td>
+                    <td>{registrationDetails?.gender}</td>
                     <td className="bold">Course : </td>
-                    <td>{personalInfo[currentPage].course}</td>
+                    <td>{personalInfo[currentPage]?.course}</td>
                   </tr>
                   <tr>
                     <td className="bold">Emergency Contact No :</td>
-                    <td>{personalInfo[currentPage].emergency_contact}</td>
+                    <td>{personalInfo[currentPage]?.emergency_contact}</td>
                     <td className="bold">Guardian Name :</td>
-                    <td>{personalInfo[currentPage].guardian_name}</td>
+                    <td>{personalInfo[currentPage]?.guardian_name}</td>
                     <td className="bold">Guardian Relation : </td>
-                    <td>{personalInfo[currentPage].guardian_relation}</td>
+                    <td>{personalInfo[currentPage]?.guardian_relation}</td>
                   </tr>
                   <tr>
                     <td className="bold">Guardian Contact No :</td>
-                    <td colSpan="5">{personalInfo[currentPage].guardian_contact_no}</td>
+                    <td colSpan="5">{personalInfo[currentPage]?.guardian_contact_no}</td>
                   </tr>
                   <tr>
                     <td colSpan="6" className="bold blue">
@@ -188,9 +189,9 @@ export default function RoomDetails() {
                   </tr>
                   <tr>
                     <td className="bold">Correspondense Address :</td>
-                    <td colSpan="2">{personalInfo[currentPage].correspondense_address}</td>
+                    <td colSpan="2">{personalInfo[currentPage]?.correspondense_address}</td>
                     <td className="bold">Correspondense State :</td>
-                    <td colSpan="2">{personalInfo[currentPage].correspondense_state}</td>
+                    <td colSpan="2">{personalInfo[currentPage]?.correspondense_state}</td>
                   </tr>
                 </tbody>
               </table>

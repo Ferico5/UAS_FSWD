@@ -1,5 +1,5 @@
 import express from 'express';
-import { countComplaint, countNewComplaint, countInProcessComplaint, countClosedComplaint, addRegisterComplaint, getRegisterComplaint, getUnprocessedRegisterComplaint, getInProcessRegisterComplaint, getClosedRegisterComplaint, getRegisterComplaintByIdUser, getDetailComplaintByIdComplaint } from '../controllers/RegisterComplaintController.js';
+import { countComplaint, countNewComplaint, countInProcessComplaint, countClosedComplaint, addRegisterComplaint, getRegisterComplaint, getUnprocessedRegisterComplaint, getInProcessRegisterComplaint, getClosedRegisterComplaint, getRegisterComplaintByIdUser, getDetailComplaintByIdComplaint, updateComplaintStatusByIdComplaint } from '../controllers/RegisterComplaintController.js';
 
 const router = express.Router();
 
@@ -14,5 +14,6 @@ router.get('/count_complaint', countComplaint)
 router.get('/count_new_complaint', countNewComplaint)
 router.get('/count_in_process_complaint', countInProcessComplaint)
 router.get('/count_closed_complaint', countClosedComplaint)
+router.put('/update_complaint_status/:register_complaint_id', updateComplaintStatusByIdComplaint)
 
 export default router;
