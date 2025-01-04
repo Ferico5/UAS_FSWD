@@ -19,6 +19,7 @@ import AddAdmin from './pages/AddAdmin';
 import Students from './pages/Students';
 import UpdateRoom from './pages/UpdateRoom';
 import FeedbackDetail from './pages/FeedbackDetail'
+import ComplaintDetail from './pages/ComplaintDetail';
 
 // import components
 import Header from './components/Header';
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: '/registered_complaints/:status',
         element: <RegisteredComplaints />,
+      },
+      {
+        path: '/complaint_detail/:register_complaint_id',
+        element: <ComplaintDetail />,
       },
       {
         path: '/feedback',

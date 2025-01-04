@@ -34,7 +34,9 @@ export default function UserForm({ isAdmin }) {
       logout();
       navigate('/login');
     } catch (error) {
-      console.log(error.message);
+      if (error.response && error.response.status === 400) {
+        setErrorMessage('Email is already exists!')
+      }
     }
   };
 

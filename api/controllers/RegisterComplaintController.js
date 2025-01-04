@@ -2,6 +2,54 @@ import RegisterComplaint from '../models/RegisterComplaintModel.js';
 import Registration from '../models/RegistrationModel.js';
 import BookRoom from '../models/BookRoomModel.js';
 
+export const countComplaint = async (req, res) => {
+  try {
+    const count = await RegisterComplaint.count()
+    res.status(200).json({count})
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
+export const countNewComplaint = async (req, res) => {
+  try {
+    const count = await RegisterComplaint.count({
+      where: {
+        complaint_status: 'Unprocessed'
+      }
+    })
+    res.status(200).json({count})
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
+export const countInProcessComplaint = async (req, res) => {
+  try {
+    const count = await RegisterComplaint.count({
+      where: {
+        complaint_status: 'In Process'
+      }
+    })
+    res.status(200).json({count})
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
+export const countClosedComplaint = async (req, res) => {
+  try {
+    const count = await RegisterComplaint.count({
+      where: {
+        complaint_status: 'Closed'
+      }
+    })
+    res.status(200).json({count})
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
 export const addRegisterComplaint = async (req, res) => {
   try {
     // Ambil data dari body
@@ -90,6 +138,20 @@ export const getClosedRegisterComplaint = async (req, res) => {
     const response = await RegisterComplaint.findAll({
       where: {
         complaint_status: 'Closed'
+      }
+    })
+    res.status(200).json(response)
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
+export const getDetailComplaintByIdComplaint = async (req, res) => {
+  const { register_complaint_id } = req.params;
+  try {
+    const response = await RegisterComplaint.findOne({
+      where: {
+        register_complaint_id: register_complaint_id
       }
     })
     res.status(200).json(response)

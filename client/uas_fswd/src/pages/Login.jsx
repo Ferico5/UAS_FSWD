@@ -28,15 +28,15 @@ export default function Login() {
         // Simpan data user setelah login berhasil
         login(response.data.response);
         navigate('/');
-      } else if (response.data.msg === 'Invalid email or password') {
-        setErrorMessage('Email or Password is incorrect!');
-        setIsLoading(false);
-        return;
       }
     } catch (error) {
-      console.error(error.message);
-      setErrorMessage('An error occured, please try again later!');
-      setIsLoading(false);
+      if (error.response && error.response.status === 400) {
+        setErrorMessage('Email or Password is incorrect!');
+        setIsLoading(false);
+      } else {
+        setErrorMessage('An error occured, please try again later!');
+        setIsLoading(false);
+      }
     }
   };
 

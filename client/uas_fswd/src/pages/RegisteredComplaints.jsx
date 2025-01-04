@@ -3,7 +3,7 @@ import '../style/RoomDetails.css';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 export default function RegisteredComplaints() {
   const { user } = useAuth();
@@ -85,9 +85,9 @@ export default function RegisteredComplaints() {
                         <td id="center">{complaint.complaint_status}</td>
                         <td>{`${formattedDate} ${formattedTime}`}</td>
                         <td id="center">
-                          <a href="#">
-                            <button>Action</button>
-                          </a>
+                        <Link to={`/complaint_detail/${complaint.register_complaint_id}`}>
+                          <button>View Details</button>
+                        </Link>
                         </td>
                       </tr>
                     );

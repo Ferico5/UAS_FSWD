@@ -8,6 +8,9 @@ export default function Feedback() {
   const { user } = useAuth();
   const isAdmin = user && user.role === 'admin';
   const [feedbacks, setFeedbacks] = useState([]);
+  const [bookingDates, setBookingDates] = useState([]);
+  const [selectedBooking, setSelectedBooking] = useState('');
+  const [roomNo, setRoomNo] = useState('');
   const navigate = useNavigate()
 
   // Fetch feedbacks for admin
@@ -25,6 +28,49 @@ export default function Feedback() {
       console.error('Error fetching feedbacks:', error);
     }
   };
+
+  useEffect(() => {
+    const fetchBookingData = async () => {
+      try {
+        if (user) {
+          const response = await axios.get(`http://localhost:5000/book_hostel/${user.id_user}`);
+          const bookings = response.data;
+
+          // Convert to formatted date
+          const bookingOptions = bookings.map((booking) => {
+            const date = new Date(booking.stay_from);
+            const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+
+            return {
+              room_no: booking.room_no,
+              booking_date: formattedDate,
+              stay_from: booking.stay_from,
+            };
+          });
+
+          setBookingDates(bookingOptions);
+          if (bookingOptions.length > 0) {
+            setSelectedBooking(bookingOptions[0].booking_date);
+            setRoomNo(bookingOptions[0].room_no);
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching booking data:', err);
+      }
+    };
+
+    fetchBookingData();
+  }, [user]);
+
+  const handleBookingChange = (e) => {
+    const selectedDate = e.target.value;
+    setSelectedBooking(selectedDate);
+
+    // Find the room number based on the selected booking date
+    const selectedBookingData = bookingDates.find((booking) => booking.booking_date === selectedDate);
+    setRoomNo(selectedBookingData.room_no);
+  };
+
 
   // Feedback form state for normal users
   const [formData, setFormData] = useState({
@@ -53,6 +99,8 @@ export default function Feedback() {
     const feedbackData = {
       ...formData,
       id_user: user.id_user, // Attach user ID from context
+      room_no: roomNo, // Attach room number
+      booking_date: selectedBooking,
     };
 
     try {
@@ -118,6 +166,16 @@ export default function Feedback() {
           <div className="box-feedback">
             <form className="form-feedback" onSubmit={handleSubmit}>
               <div className="fillform-feedback">
+              <p>
+                  Booking Date:
+                  <select name="booking_date" id="booking_date" value={selectedBooking} onChange={handleBookingChange} required>
+                    {bookingDates.map((booking, index) => (
+                      <option key={index} value={booking.booking_date}>
+                        {booking.booking_date} - Room {booking.room_no}
+                      </option>
+                    ))}
+                  </select>
+                </p>
                 <div className="flex">
                   <div className="flexforp">
                   <p>Accessibility to Warden:</p>

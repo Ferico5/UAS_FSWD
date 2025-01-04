@@ -8,6 +8,7 @@ export default function BookHostel() {
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const { user, updateRoomNo } = useAuth();
+  const [states, setStates] = useState([]);
   const [formData, setFormData] = useState({
     room_no: '',
     food_status: 'Without Food',
@@ -25,6 +26,8 @@ export default function BookHostel() {
   });
 
   const navigate = useNavigate();
+
+  const localStates = ['Indonesia', 'Malaysia', 'Singapore', 'Hongkong', 'Philippines', 'Myanmar', 'Vietnam', 'Other'];
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -46,7 +49,19 @@ export default function BookHostel() {
       }
     };
 
+    const fetchStates = async () => {
+      try {
+        const response = await axios.get('https://restcountries.com/v3.1/all');
+        const countries = response.data.map((country) => country.name.common);
+        setStates(countries.sort()); // Atur daftar negara secara alfabetis
+      } catch (error) {
+        console.error('Error fetching states from API:', error);
+        setStates(localStates); // Gunakan data lokal jika gagal
+      }
+    };
+
     fetchRooms();
+    fetchStates();
   }, [updateRoomNo]);
 
   const handleRoomChange = (e) => {
@@ -67,8 +82,6 @@ export default function BookHostel() {
       duration: formData.duration,
       id_user: user.id_user,
     };
-
-    console.log('data dari handlesubmit', bookingData);
 
     const personalInfoData = {
       course: formData.course,
@@ -93,7 +106,7 @@ export default function BookHostel() {
         // Update the remaining_seater count in the database
         await axios.put('http://localhost:5000/update_room', {
           room_no: selectedRoom.room_no,
-          remaining_seater: selectedRoom.remaining_seater - 1
+          remaining_seater: selectedRoom.remaining_seater - 1,
         });
       }
 
@@ -105,6 +118,9 @@ export default function BookHostel() {
       console.error('Error during submission:', error);
     }
   };
+
+  // Mendapatkan tanggal hari ini untuk atribut `min`
+  const today = new Date().toISOString().split('T')[0];
 
   return (
     <div className="container">
@@ -147,7 +163,7 @@ export default function BookHostel() {
                 </select>
               </p>
               <p>
-                Stay From: <input type="date" name="stay_from" id="stayFrom" onChange={(e) => setFormData({ ...formData, stay_from: e.target.value })} required></input>
+                Stay From: <input type="date" name="stay_from" id="stayFrom" min={today} onChange={(e) => setFormData({ ...formData, stay_from: e.target.value })} required></input>
               </p>
               <p>
                 Duration:
@@ -226,9 +242,12 @@ export default function BookHostel() {
               </p>
               <p>
                 State:
-                <select name="correspondenseState" id="correspondenseState" onChange={(e) => setFormData({ ...formData, correspondense_state: e.target.value })} required>
-                  <option value="indonesia">Indonesia</option>
-                  <option value="malaysia">Malaysia</option>
+                <select name="correspondenseState" id="correspondenseState" value={formData.correspondense_state} onChange={(e) => setFormData({ ...formData, correspondense_state: e.target.value })} required>
+                  {states.map((state) => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
                 </select>
               </p>
               <p>

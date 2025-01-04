@@ -19,14 +19,13 @@ export default function Rooms() {
     fetchRooms();
   }, []);
 
-  const deleteRoom = async (id_room) => {
+  const deleteRoom = async (room_no) => {
     if (window.confirm('Are you sure you want to delete this room?')) {
       try {
-        // Hapus ruangan berdasarkan id_room
-        const response = await axios.delete(`http://localhost:5000/delete_room/${id_room}`);
+        const response = await axios.delete(`http://localhost:5000/delete_room/${room_no}`);
         if (response.data.msg === 'Room Deleted!') {
           // Update data rooms setelah penghapusan
-          setRooms(rooms.filter(room => room.id_room !== id_room));
+          setRooms(rooms.filter(room => room.room_no !== room_no));
         }
       } catch (error) {
         console.error('Error deleting room:', error.message);

@@ -1,9 +1,10 @@
 import express from 'express'
-import {addRoom, getRoom, getRoomByRoomNo, updateRoom, deleteRoom} from '../controllers/RoomController.js'
+import {countRoom, addRoom, getRoom, getRoomByRoomNo, updateRoom, deleteRoom} from '../controllers/RoomController.js'
 
 const router = express.Router()
 
 router.post('/add_room', addRoom)
+router.get('/count_room', countRoom)
 router.get('/rooms', getRoom)
 router.get('/rooms/:room_no', getRoomByRoomNo)
 router.put('/update_room/:room_no', updateRoom)
