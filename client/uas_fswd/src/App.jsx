@@ -18,6 +18,8 @@ import AddRoom from './pages/AddRoom';
 import AddAdmin from './pages/AddAdmin';
 import Students from './pages/Students';
 import UpdateRoom from './pages/UpdateRoom';
+import FeedbackDetail from './pages/FeedbackDetail'
+import ComplaintDetail from './pages/ComplaintDetail';
 
 // import components
 import Header from './components/Header';
@@ -72,6 +74,14 @@ const router = createBrowserRouter([
         element: <RegisteredComplaints />,
       },
       {
+        path: '/registered_complaints/:status',
+        element: <RegisteredComplaints />,
+      },
+      {
+        path: '/complaint_detail/:register_complaint_id',
+        element: <ComplaintDetail />,
+      },
+      {
         path: '/feedback',
         element: <Feedback />,
       },
@@ -102,6 +112,10 @@ const router = createBrowserRouter([
       {
         path: '/update_room/:id_room',
         element: <UpdateRoom />,
+      },
+      {
+        path: '/feedback/:id_feedback',
+        element: <FeedbackDetail />,
       },
     ],
   },

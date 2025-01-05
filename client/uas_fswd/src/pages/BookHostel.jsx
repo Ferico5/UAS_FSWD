@@ -7,7 +7,8 @@ import axios from 'axios';
 export default function BookHostel() {
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
-  const { user } = useAuth();
+  const { user, updateRoomNo } = useAuth();
+  const [states, setStates] = useState([]);
   const [formData, setFormData] = useState({
     room_no: '',
     food_status: 'Without Food',
@@ -26,6 +27,8 @@ export default function BookHostel() {
 
   const navigate = useNavigate();
 
+  const localStates = ['Indonesia', 'Malaysia', 'Singapore', 'Hongkong', 'Philippines', 'Myanmar', 'Vietnam', 'Other'];
+
   useEffect(() => {
     const fetchRooms = async () => {
       try {
@@ -33,22 +36,40 @@ export default function BookHostel() {
         const data = response.data;
         setRooms(data);
 
-        // Set the default selected room to the first available room with remaining_seater > 0
-        const firstAvailableRoom = data.find((room) => room.remaining_seater > 0);
-        if (firstAvailableRoom) {
-          setSelectedRoom(firstAvailableRoom);
+        // Only set the default room if there's no room selected yet
+        if (!selectedRoom) {
+          const firstAvailableRoom = data.find((room) => room.remaining_seater > 0);
+          if (firstAvailableRoom) {
+            setSelectedRoom(firstAvailableRoom);
+            updateRoomNo(firstAvailableRoom.room_no);
+          }
         }
       } catch (error) {
         console.error('Error fetching rooms:', error);
       }
     };
 
+    const fetchStates = async () => {
+      try {
+        const response = await axios.get('https://restcountries.com/v3.1/all');
+        const countries = response.data.map((country) => country.name.common);
+        setStates(countries.sort()); // Atur daftar negara secara alfabetis
+      } catch (error) {
+        console.error('Error fetching states from API:', error);
+        setStates(localStates); // Gunakan data lokal jika gagal
+      }
+    };
+
     fetchRooms();
-  }, []);
+    fetchStates();
+  }, [updateRoomNo]);
 
   const handleRoomChange = (e) => {
-    const selectedRoom = rooms.find((room) => room.room_no === parseInt(e.target.value));
-    setSelectedRoom(selectedRoom);
+    const room = rooms.find((room) => room.room_no === parseInt(e.target.value));
+    setSelectedRoom(room);
+    if (room) {
+      updateRoomNo(room.room_no);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -82,20 +103,24 @@ export default function BookHostel() {
       });
 
       if (bookingResponse.status === 200) {
-        const updatedRoom = {
-        remaining_seater: selectedRoom.remaining_seater - 1,
-      };
+        // Update the remaining_seater count in the database
+        await axios.put('http://localhost:5000/update_room', {
+          room_no: selectedRoom.room_no,
+          remaining_seater: selectedRoom.remaining_seater - 1,
+        });
       }
 
       // Send POST request for personal info
       await axios.post('http://localhost:5000/personal_info', personalInfoData);
 
       navigate('/room_details');
-
     } catch (error) {
       console.error('Error during submission:', error);
     }
   };
+
+  // Mendapatkan tanggal hari ini untuk atribut `min`
+  const today = new Date().toISOString().split('T')[0];
 
   return (
     <div className="container">
@@ -138,7 +163,7 @@ export default function BookHostel() {
                 </select>
               </p>
               <p>
-                Stay From: <input type="date" name="stay_from" id="stayFrom" onChange={(e) => setFormData({ ...formData, stay_from: e.target.value })} required></input>
+                Stay From: <input type="date" name="stay_from" id="stayFrom" min={today} onChange={(e) => setFormData({ ...formData, stay_from: e.target.value })} required></input>
               </p>
               <p>
                 Duration:
@@ -187,7 +212,7 @@ export default function BookHostel() {
                 Course: <input type="text" name="course" onChange={(e) => setFormData({ ...formData, course: e.target.value })} required></input>
               </p>
               <p>
-                Full Name: <input type="text" name="fullName" id="fullName" value={user?.full_name || ''}  readOnly></input>
+                Full Name: <input type="text" name="fullName" id="fullName" value={user?.full_name || ''} readOnly></input>
               </p>
               <p>
                 Gender: <input type="text" name="gender" id="gender" value={user?.gender || ''} readOnly></input>
@@ -217,9 +242,12 @@ export default function BookHostel() {
               </p>
               <p>
                 State:
-                <select name="correspondenseState" id="correspondenseState" onChange={(e) => setFormData({ ...formData, correspondense_state: e.target.value })} required>
-                  <option value="indonesia">Indonesia</option>
-                  <option value="malaysia">Malaysia</option>
+                <select name="correspondenseState" id="correspondenseState" value={formData.correspondense_state} onChange={(e) => setFormData({ ...formData, correspondense_state: e.target.value })} required>
+                  {states.map((state) => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
                 </select>
               </p>
               <p>

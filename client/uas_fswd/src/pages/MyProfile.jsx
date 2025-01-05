@@ -1,18 +1,25 @@
 import '../style/MyProfile.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function MyProfile() {
-  const { user } = useAuth(); // Get user data from context
-  const isAdmin = user && user.role === 'admin'; // Check if the user is an admin
-  const userId = user.id_user; // Ambil ID pengguna dari konteks
-  const navigate = useNavigate(); // Create navigate instance
+  const { user, setUser, logout } = useAuth();
+  const isAdmin = user && user.role === 'admin';
+  const userId = user?.id_user;
+  console.log(userId);
+  const navigate = useNavigate();
 
-  const [fullName, setFullName] = useState(user.full_name || '');
-  const [contactNo, setContactNo] = useState(user.contact_no || '');
-  const [email, setEmail] = useState(user.email || '');
+  useEffect(() => {
+    setFullName(user?.full_name);
+    setEmail(user?.email);
+    setContactNo(user?.contact_no);
+  }, [user]);
+
+  const [fullName, setFullName] = useState(user?.full_name || '');
+  const [contactNo, setContactNo] = useState(user?.contact_no || '');
+  const [email, setEmail] = useState(user?.email || '');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -36,11 +43,21 @@ export default function MyProfile() {
       };
 
       // Kirim data ke server
-      await axios.put(`http://localhost:5000/users/${userId}`, updatedData);
-      navigate('/');
+      await axios.put(`http://localhost:5000/admin/${userId}`, updatedData);
+      setUser({ ...user, full_name: fullName, contact_no: contactNo, email });
+
+      if (isAdmin && newPassword) {
+        logout();
+        navigate('/login');
+      } else {
+        navigate('/');
+      }
     } catch (error) {
-      console.error(error);
-      setErrorMessage('An error occurred while updating the profile.');
+      if (error.response && error.response.status === 400) {
+        setErrorMessage('Current Password is Incorrect');
+      } else {
+        setErrorMessage('An error occurred while updating the profile.');
+      }
     }
   };
 
@@ -78,10 +95,10 @@ export default function MyProfile() {
                     Current Password: <input type="password" name="current_password" id="current_password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required />
                   </p>
                   <p>
-                    New Password: <input type="password" name="new_password" id="new_password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
+                    New Password: <input type="password" name="new_password" id="new_password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
                   </p>
                   <p>
-                    Confirm New Password: <input type="password" name="confirm_new_password" id="confirm_new_password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} required />
+                    Confirm New Password: <input type="password" name="confirm_new_password" id="confirm_new_password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} />
                   </p>
                 </>
               )}

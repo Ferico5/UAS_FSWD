@@ -1,16 +1,16 @@
-/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function AddRoom() {
   const [roomNo, setRoomNo] = useState('');
-  const [seater, setSeater] = useState('');
+  const [seater, setSeater] = useState(1);
   const [feesPerMonth, setFeesPerMonth] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async(e) => {
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     let remainingSeater = seater;
 
@@ -20,15 +20,19 @@ export default function AddRoom() {
         seater,
         fees_per_month: feesPerMonth,
         remaining_seater: remainingSeater,
-      })
+      });
 
       if (response.data.msg === 'Room Added!') {
-        navigate('/rooms')
+        navigate('/rooms');
       }
     } catch (error) {
-      console.error(error.message)
+      if (error.response && error.response.status === 400) {
+        setErrorMsg(error.response.data.msg); // Set error message
+      } else {
+        setErrorMsg('Something went wrong! Please try again.'); // General error message
+      }
     }
-  }
+  };
 
   return (
     <div className="container">
@@ -65,6 +69,8 @@ export default function AddRoom() {
                 <p>
                   Fee (per student) : <input type="text" name="fees_per_month" id="fees_per_month" value={feesPerMonth} onChange={(e) => setFeesPerMonth(e.target.value)} required></input>
                 </p>
+                {errorMsg && <p className="error-msg">{errorMsg}</p>}
+
                 <div className="buttonform">
                   <button type="reset">
                     <Link to="/">Cancel</Link>

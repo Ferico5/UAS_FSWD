@@ -52,7 +52,15 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  return <AuthContext.Provider value={{ isLoggedIn, user, login, logout }}>{children}</AuthContext.Provider>;
+  const updateRoomNo = (room_no) => {
+    setUser((prevUser) => {
+      const updatedUser = { ...prevUser, room_no };
+      localStorage.setItem('userData', JSON.stringify(updatedUser));
+      return updatedUser;
+    });
+  };
+
+  return <AuthContext.Provider value={{ isLoggedIn, user, login, logout, updateRoomNo, setUser }}>{children}</AuthContext.Provider>;
 };
 
 // Hook untuk menggunakan AuthContext

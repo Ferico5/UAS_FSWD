@@ -5,7 +5,10 @@ import './models/RegistrationModel.js';
 import RegistrationRoute from './routes/RegistrationRoute.js';
 import RoomRoute from './routes/RoomRoute.js';
 import BookRoomRoute from './routes/BookRoomRoute.js';
-import PersonalInfoRoute from './routes/PersonalInfoRoute.js'
+import PersonalInfoRoute from './routes/PersonalInfoRoute.js';
+import RegisterComplaintRoute from './routes/RegisterComplaintRoute.js';
+import FeedbackRoute from './routes/FeedbackRoute.js';
+import ComplaintActionRoute from './routes/ComplaintActionRoute.js'
 import db from './config/Database.js';
 
 const app = express();
@@ -17,6 +20,9 @@ app.use(RegistrationRoute);
 app.use(RoomRoute);
 app.use(BookRoomRoute);
 app.use(PersonalInfoRoute);
+app.use(RegisterComplaintRoute);
+app.use(FeedbackRoute);
+app.use(ComplaintActionRoute);
 
 // Sinkronisasi database
 (async () => {
