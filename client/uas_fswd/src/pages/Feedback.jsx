@@ -11,7 +11,7 @@ export default function Feedback() {
   const [bookingDates, setBookingDates] = useState([]);
   const [selectedBooking, setSelectedBooking] = useState('');
   const [roomNo, setRoomNo] = useState('');
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // Fetch feedbacks for admin
   useEffect(() => {
@@ -23,7 +23,8 @@ export default function Feedback() {
   const fetchFeedbacks = async () => {
     try {
       const response = await axios.get('http://localhost:5000/feedback');
-      setFeedbacks(response.data);
+      const uniqueFeedbacks = response.data.filter((feedback, index, self) => index === self.findIndex((f) => f.id_feedback === feedback.id_feedback));
+      setFeedbacks(uniqueFeedbacks);
     } catch (error) {
       console.error('Error fetching feedbacks:', error);
     }
@@ -36,17 +37,19 @@ export default function Feedback() {
           const response = await axios.get(`http://localhost:5000/book_hostel/${user.id_user}`);
           const bookings = response.data;
 
-          // Convert to formatted date
-          const bookingOptions = bookings.map((booking) => {
-            const date = new Date(booking.stay_from);
-            const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+          const bookingOptions = bookings
+            .filter((booking) => !booking.has_feedback) // Hanya booking yang belum ada feedback
+            .map((booking) => {
+              const date = new Date(booking.stay_from);
+              const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
 
-            return {
-              room_no: booking.room_no,
-              booking_date: formattedDate,
-              stay_from: booking.stay_from,
-            };
-          });
+              return {
+                id_book: booking.id_book,
+                room_no: booking.room_no,
+                booking_date: formattedDate,
+                stay_from: booking.stay_from,
+              };
+            });
 
           setBookingDates(bookingOptions);
           if (bookingOptions.length > 0) {
@@ -70,7 +73,6 @@ export default function Feedback() {
     const selectedBookingData = bookingDates.find((booking) => booking.booking_date === selectedDate);
     setRoomNo(selectedBookingData.room_no);
   };
-
 
   // Feedback form state for normal users
   const [formData, setFormData] = useState({
@@ -96,9 +98,16 @@ export default function Feedback() {
       return;
     }
 
+    const selectedBookingData = bookingDates.find((booking) => booking.booking_date === selectedBooking);
+    if (!selectedBookingData) {
+      alert('Invalid booking selected. Please choose another booking.');
+      return;
+    }
+
     const feedbackData = {
       ...formData,
       id_user: user.id_user, // Attach user ID from context
+      id_book: bookingDates.find((booking) => booking.booking_date === selectedBooking)?.id_book,
       room_no: roomNo, // Attach room number
       booking_date: selectedBooking,
     };
@@ -117,7 +126,9 @@ export default function Feedback() {
           overall_rating: '',
           feedback_message: '',
         });
-        navigate('/')
+
+        console.log(response);
+        navigate('/');
       }
     } catch (error) {
       console.error('Error submitting feedback:', error);
@@ -149,7 +160,7 @@ export default function Feedback() {
                   {feedbacks.map((feedback, index) => (
                     <tr key={feedback.id_feedback}>
                       <td id="center">{index + 1}</td>
-                      <td id='center'>{feedback.user?.full_name || 'N/A'}</td>
+                      <td id="center">{feedback.user?.full_name || 'N/A'}</td>
                       <td id="center">{feedback.bookedRoom?.room_no || 'N/A'}</td>
                       <td id="center">
                         <Link to={`/feedback/${feedback.id_feedback}`}>
@@ -166,7 +177,7 @@ export default function Feedback() {
           <div className="box-feedback">
             <form className="form-feedback" onSubmit={handleSubmit}>
               <div className="fillform-feedback">
-              <p>
+                <p>
                   Booking Date:
                   <select name="booking_date" id="booking_date" value={selectedBooking} onChange={handleBookingChange} required>
                     {bookingDates.map((booking, index) => (
@@ -178,7 +189,7 @@ export default function Feedback() {
                 </p>
                 <div className="flex">
                   <div className="flexforp">
-                  <p>Accessibility to Warden:</p>
+                    <p>Accessibility to Warden:</p>
                   </div>
                   {['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'].map((option) => (
                     <label key={option}>

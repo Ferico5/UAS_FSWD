@@ -18,8 +18,9 @@ import AddRoom from './pages/AddRoom';
 import AddAdmin from './pages/AddAdmin';
 import Students from './pages/Students';
 import UpdateRoom from './pages/UpdateRoom';
-import FeedbackDetail from './pages/FeedbackDetail'
+import FeedbackDetail from './pages/FeedbackDetail';
 import ComplaintDetail from './pages/ComplaintDetail';
+import PageNotFound from './pages/PageNotFound';
 
 // import components
 import Header from './components/Header';
@@ -117,16 +118,12 @@ const router = createBrowserRouter([
         path: '/feedback/:id_feedback',
         element: <FeedbackDetail />,
       },
+      {
+        path: '*',
+        element: <PageNotFound />,
+      },
     ],
   },
-  // {
-  //   path: '/register',
-  //   element: <Register />,
-  // },
-  // {
-  //   path: '/login',
-  //   element: <Login />,
-  // },
 ]);
 
 const App = () => {
