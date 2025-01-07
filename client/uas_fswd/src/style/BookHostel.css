@@ -1,26 +1,39 @@
 .formcontainer {
     /* width: 97%; */
-    border: 2px solid #2E5A82;
-    margin: 1.5em 1rem 1rem 1.3em;
-}
-.content h2{
-    
+    border: 2px solid #000000d5;
+    margin: 1em .1em;
+    border-radius: .3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
 }
 
 .formcontainer p {
-    color: #DADBE8;
-    background-color: #2E5A82;
+    width: 100%;
+    color: #e2e3ea;
+    background-color: #000000f3;
     font-size: .95em;
     padding: .7em;
     font-weight: bold;  
 }
+
 .form{
+    width: 60%;
+    margin: 3em 0 2.5em 0;
     height: 100%;
 }
+
 form h3 {
-    color: #76996B;
+    color: #63ab4d;
     font-size: 1.5em;
     margin: 1.5em 0 0 .4em;
+}
+
+form h3:nth-child(1){
+    margin: 0 0 0 .4em;
+
 }
 
 .fillform{
@@ -38,8 +51,8 @@ form h3 {
 
 .fillform input, .fillform select {
     width: 350px;
-    margin: 0 10em 0 1em;
-    padding: .3em;
+    margin: 0 1em 0 1em;
+    padding: .4em;
 }
 
 .fillform input[readonly], .fillform select[readonly] {
@@ -59,29 +72,46 @@ form h3 {
 .buttonform {
     display: flex;
     justify-content: center;
-    margin: .5em 0;
+    gap: 30px;
+    margin: 2em 0 .5em;
 }
 
 .buttonform button[type="reset"] {
-    background-color: #3E3F3A;
-    color: #DCDCDA;
+    background-color: #ffffff;
+    border: 2px solid black;
 }
 
 .buttonform button[type="submit"] {
-    background-color: #2E5A82;
-    color: #DCDCDA;
+    background-color: #000000f0;
+    color: #ffffff;
+    border: 2px solid black;
 }
 
 .buttonform button {
-    border-radius: 2px;
     border: none;
-    padding: .5em 1em;
-    margin: 0 1em;
+    padding: 1em 1.8em;
+    margin: 1em 1em 0;
+    width: 115px;
+    font-size: 15px;
+    text-align: center;
+    font-weight: bold;
+
+}
+
+.buttonform button:hover {
+    background-color: rgb(72, 71, 71);
+    border: 2px solid rgb(72, 71, 71);
+    color: #ffffff;
 }
 
 .buttonform button a {
-    color: #DCDCDA;
+    color: #000000;
     text-decoration: none;
+    font-weight: bold;
+}
+
+.buttonform button:hover a {
+    color:#ffffff;
 }
 
 .buttonform button:hover {

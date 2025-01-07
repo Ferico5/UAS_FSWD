@@ -166,105 +166,127 @@ export default function Feedback() {
           <div className="box-feedback">
             <form className="form-feedback" onSubmit={handleSubmit}>
               <div className="fillform-feedback">
-              <p>
-                  Booking Date:
-                  <select name="booking_date" id="booking_date" value={selectedBooking} onChange={handleBookingChange} required>
+              <div className="flex">
+                <div className="flexforp">
+                  <p>Booking Date:</p>
+                </div>
+                <div className="label-feedback">
+                <select name="booking_date" id="booking_date" value={selectedBooking} onChange={handleBookingChange} required>
+
                     {bookingDates.map((booking, index) => (
                       <option key={index} value={booking.booking_date}>
                         {booking.booking_date} - Room {booking.room_no}
                       </option>
                     ))}
                   </select>
-                </p>
+                </div>
+              </div>
+                
                 <div className="flex">
                   <div className="flexforp">
                   <p>Accessibility to Warden:</p>
                   </div>
+                  <div className="label-feedback">
                   {['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'].map((option) => (
                     <label key={option}>
                       <input type="radio" name="accessibility_to_warden" value={option} checked={formData.accessibility_to_warden === option} onChange={handleInputChange} />
                       {option}
                     </label>
                   ))}
+                  </div>
                 </div>
 
                 <div className="flex">
                   <div className="flexforp">
                     <p>Accessibility to Hostel Committee Members:</p>
                   </div>
+                  <div className="label-feedback">
                   {['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'].map((option) => (
                     <label key={option}>
-                      <input type="radio" name="accessibility_to_hostel_committee_members" value={option} checked={formData.accessibility_to_hostel_committee_members === option} onChange={handleInputChange} />
+                      <input type="radio" name="accessibility_to_warden" value={option} checked={formData.accessibility_to_warden === option} onChange={handleInputChange} />
                       {option}
                     </label>
                   ))}
+                  </div>
                 </div>
 
                 <div className="flex">
                   <div className="flexforp">
                     <p>Redressal of Problems:</p>
                   </div>
+                  <div className="label-feedback">
                   {['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'].map((option) => (
                     <label key={option}>
-                      <input type="radio" name="redressal_of_problems" value={option} checked={formData.redressal_of_problems === option} onChange={handleInputChange} />
+                      <input type="radio" name="accessibility_to_warden" value={option} checked={formData.accessibility_to_warden === option} onChange={handleInputChange} />
                       {option}
                     </label>
                   ))}
+                  </div>
                 </div>
 
                 <div className="flex">
                   <div className="flexforp">
                     <p>Room:</p>
                   </div>
+                  <div className="label-feedback">
                   {['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'].map((option) => (
                     <label key={option}>
-                      <input type="radio" name="room" value={option} checked={formData.room === option} onChange={handleInputChange} />
+                      <input type="radio" name="accessibility_to_warden" value={option} checked={formData.accessibility_to_warden === option} onChange={handleInputChange} />
                       {option}
                     </label>
                   ))}
+                  </div>
                 </div>
 
                 <div className="flex">
                   <div className="flexforp">
                     <p>Mess:</p>
                   </div>
+                  <div className="label-feedback">
                   {['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'].map((option) => (
                     <label key={option}>
-                      <input type="radio" name="mess" value={option} checked={formData.mess === option} onChange={handleInputChange} />
+                      <input type="radio" name="accessibility_to_warden" value={option} checked={formData.accessibility_to_warden === option} onChange={handleInputChange} />
                       {option}
                     </label>
                   ))}
+                  </div>
                 </div>
 
                 <div className="flex">
                   <div className="flexforp">
                     <p>Hostel Surroundings:</p>
                   </div>
+                  <div className="label-feedback">
                   {['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'].map((option) => (
                     <label key={option}>
-                      <input type="radio" name="hostel_surroundings" value={option} checked={formData.hostel_surroundings === option} onChange={handleInputChange} />
+                      <input type="radio" name="accessibility_to_warden" value={option} checked={formData.accessibility_to_warden === option} onChange={handleInputChange} />
                       {option}
                     </label>
                   ))}
+                  </div>
                 </div>
 
                 <div className="flex">
                   <div className="flexforp">
                     <p>Overall Rating:</p>
                   </div>
+                  <div className="label-feedback">
                   {['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'].map((option) => (
                     <label key={option}>
-                      <input type="radio" name="overall_rating" value={option} checked={formData.overall_rating === option} onChange={handleInputChange} />
+                      <input type="radio" name="accessibility_to_warden" value={option} checked={formData.accessibility_to_warden === option} onChange={handleInputChange} />
                       {option}
                     </label>
                   ))}
+                  </div>
                 </div>
 
                 <div className="flex">
                   <div className="flexforp">
                     <p>Feedback Message (if any):</p>
                   </div>
-                  <input type="text" name="feedback_message" className="input-type" value={formData.feedback_message} onChange={handleInputChange} />
+                  <div className="label-feedback">  
+                    <input type="text" name="feedback_message" className="input-type input" value={formData.feedback_message} onChange={handleInputChange} />
+                  </div>
                 </div>
 
                 <div className="buttonform-feedback">

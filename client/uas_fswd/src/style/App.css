@@ -12,17 +12,18 @@ body{
     overflow: hidden;
 }
 .container {
+    width: 83vw;
     display: flex;
     height: 91vh;
     overflow-x: hidden;
     overflow-y: scroll;
     display: flex;
     justify-content: center;
+    position:sticky;
 }
 .content {
-    /* background-color: blue; */
-    width: 80vw;
+    background-color: rgba(242, 242, 243, 0.057);
+    width: 83vw;
     height: fit-content;
-    margin: 1em;
-    padding: 1em;
+    padding: 2em;
   }

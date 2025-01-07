@@ -1,20 +1,41 @@
 .content h2 {
-  margin: 0 0 .5em .8em;
+  margin: 0 0 1em 0;
   font-size: 1.7em;
+  font-weight:bold;
+  text-decoration:solid;
 }
 
 .box-container {
   display: flex;
+  align-items: start;
+  justify-content: start;
+  gap: 2em;
   flex-wrap: wrap;
   /* background-color: grey; */
 }
 
 .box {
+  width: 100%;
   display: flex;
   flex-direction: column;
   margin-right: 3em;
   margin-bottom: 2em;
-  width: 28%;
+  border-radius: .3em;
+  transition: 0.3 s;
+}
+.box-dashboard {
+  display: flex;
+  flex-direction: column;
+  /* margin: 0 1.5em 2em 1.5em; */
+  width: 29%;
+  min-width: 300px;
+  max-width: 400px;
+  border-radius: .3em;
+  transition: 0.3 s;
+}
+
+.box-dashboard:hover{
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
 .box-title {
@@ -27,19 +48,28 @@
 }
 
 .full-info {
-  background-color: #f8f5f0;
+  background-color: rgba(0,0,0,0.1);
   height: 2em;
   display: flex;
   align-items: center;
-  border: 1px solid #e9e3da;
+  border: 1px solid none;
+  border-radius: 0 0 .2em .2em;
+}
+
+.full-info:hover{
+  background-color: rgba(0,0,0,0.2);
+}
+
+.full-info:hover .link-full-detail{
+  color: #fff;  
 }
 
 .link-full-detail {
   text-decoration: none;
-  padding-left: 1em;
-  color: #000;
+  width: 100%;
+  text-align: center;
+  color: #ffffffd1;
 }
-
 /* untuk admin */
 .info {
   display: flex;
@@ -54,11 +84,11 @@
 /* end untuk admin */
 
 #blue {
-  background-color: #325d88;
+  background-color: #00c0ef;
 }
 
 #green {
-  background-color: #93c54b;
+  background-color: #13af69;
 }
 
 #purple {

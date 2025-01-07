@@ -11,6 +11,9 @@ table button {
 table button:hover {
     cursor: pointer;
     color: #eee;
+    display: none;
+    justify-content: center;
+    align-items: center;
 }
 
 #center {

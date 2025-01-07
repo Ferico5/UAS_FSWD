@@ -39,9 +39,9 @@ export default function AddRoom() {
       <div className="content">
         <h2>Add Room</h2>
 
-        <div className="container">
-          <div className="box">
-            <form className="form" onSubmit={handleSubmit}>
+        <div className="container-form">
+        <div className="box-form">
+            <form className="forms" onSubmit={handleSubmit}>
               <div className="fillform">
                 <p>
                   Select seater :

@@ -1,6 +1,7 @@
 .fillform-complaint {
-    border: 2px solid black;
-    border-radius: 5px;
+    border: 2px dashed black;
+    border-radius: 8px;
+    padding: 1em 5em 2em 5em;
 }
 
 .fillform-complaint p {
@@ -8,44 +9,27 @@
     color: #000;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    padding-top: 1em;
+    justify-content: space-between;
+    width: auto;
+    margin: 2em 3em;
+    font-weight: bold;
 }
 
 #explain_complaint, 
 .fillform-complaint select {
     width: 60%;
-    margin: 0 10em 0 1em;
-    padding: .4em;
+    margin: 0 1em 0 1em;
+    padding: .5em;
+    min-width: 200px;
 }
 
-.buttonform {
-    display: flex;
-    justify-content: center;
-    margin: .5em 0;
+.box .boxheader{
+    width: 100%;
 }
 
-.buttonform button[type="reset"] {
-    background-color: #3E3F3A;
-}
-
-.buttonform button[type="submit"] {
-    background-color: #2E5A82;
-    color: #DCDCDA;
-}
-
-.buttonform button {
-    border-radius: 2px;
-    border: none;
-    padding: .5em 1em;
-    margin: 1em;
-}
-
-.buttonform button a {
-    color: #DCDCDA;
-    text-decoration: none;
-}
-
-.buttonform button:hover {
-    cursor: pointer;
+.box .boxinfo{
+    /* width: max-content; */
+    width: 100%;
+    margin-top: 2em;
+    padding-bottom: 1em;
 }
