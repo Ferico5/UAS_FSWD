@@ -12,6 +12,7 @@ export default function ComplaintRegistration() {
   const [explainComplaint, setExplainComplaint] = useState('');
   const [bookingDates, setBookingDates] = useState([]);
   const [selectedBooking, setSelectedBooking] = useState('');
+  const [hasBooked, setHasBooked] = useState(undefined);
 
   const navigate = useNavigate();
 
@@ -21,6 +22,10 @@ export default function ComplaintRegistration() {
         if (user) {
           const response = await axios.get(`http://localhost:5000/book_hostel/${user.id_user}`);
           const bookings = response.data;
+
+          if (bookings.length === 0) {
+            setHasBooked(false);
+          }
 
           // Convert to formatted date
           const bookingOptions = bookings.map((booking) => {
@@ -82,62 +87,71 @@ export default function ComplaintRegistration() {
       <div className="content">
         <h2>Complaint Registration</h2>
 
-        <div>
-          <div>
-            <form className="form-complaint" onSubmit={handleSubmit}>
-              <div className="fillform-complaint">
-                <p>
-                  Booking Date:
-                  <select name="booking_date" id="booking_date" value={selectedBooking} onChange={handleBookingChange} required>
-                    {bookingDates.map((booking, index) => (
-                      <option key={index} value={booking.booking_date}>
-                        {booking.booking_date} - Room {booking.room_no}
-                      </option>
-                    ))}
-                  </select>
-                </p>
-
-                <p>
-                  Complaint Type:
-                  <select name="complaint_type" id="complaint_type" value={complaintType} onChange={(e) => setComplaintType(e.target.value)} required>
-                    <option value="Food related" name="food_related">
-                      Food Related
-                    </option>
-                    <option value="Room related" name="room_related">
-                      Room Related
-                    </option>
-                    <option value="Fee related" name="fee_related">
-                      Fee Related
-                    </option>
-                    <option value="Electrical" name="electrical">
-                      Electrical
-                    </option>
-                    <option value="Plumbing" name="plumbing">
-                      Plumbing
-                    </option>
-                    <option value="Discipline" name="discipline">
-                      Discipline
-                    </option>
-                    <option value="Other" name="other">
-                      Other
-                    </option>
-                  </select>
-                </p>
-                <p>
-                  Explain the Complaint: <input type="textarea" name="explain_complaint" id="explain_complaint" value={explainComplaint} onChange={(e) => setExplainComplaint(e.target.value)} required></input>
-                </p>
-                <div className="buttonform">
-                  <button type="reset">
-                    <Link to="/">Cancel</Link>
-                  </button>
-                  <button type="submit" id="submit">
-                    Register
-                  </button>
-                </div>
-              </div>
-            </form>
+        {hasBooked === false ? (
+          <div className="hasBooked_message">
+            <p>You have not booked a room yet. Please book first.</p>
+            <Link to={'/book_hostel'}>
+              <button>Go to Book Hostel Page</button>
+            </Link>
           </div>
-        </div>
+        ) : (
+          <div>
+            <div>
+              <form className="form-complaint" onSubmit={handleSubmit}>
+                <div className="fillform-complaint">
+                  <p>
+                    Booking Date:
+                    <select name="booking_date" id="booking_date" value={selectedBooking} onChange={handleBookingChange} required>
+                      {bookingDates.map((booking, index) => (
+                        <option key={index} value={booking.booking_date}>
+                          {booking.booking_date} - Room {booking.room_no}
+                        </option>
+                      ))}
+                    </select>
+                  </p>
+
+                  <p>
+                    Complaint Type:
+                    <select name="complaint_type" id="complaint_type" value={complaintType} onChange={(e) => setComplaintType(e.target.value)} required>
+                      <option value="Food related" name="food_related">
+                        Food Related
+                      </option>
+                      <option value="Room related" name="room_related">
+                        Room Related
+                      </option>
+                      <option value="Fee related" name="fee_related">
+                        Fee Related
+                      </option>
+                      <option value="Electrical" name="electrical">
+                        Electrical
+                      </option>
+                      <option value="Plumbing" name="plumbing">
+                        Plumbing
+                      </option>
+                      <option value="Discipline" name="discipline">
+                        Discipline
+                      </option>
+                      <option value="Other" name="other">
+                        Other
+                      </option>
+                    </select>
+                  </p>
+                  <p>
+                    Explain the Complaint: <input type="textarea" name="explain_complaint" id="explain_complaint" value={explainComplaint} onChange={(e) => setExplainComplaint(e.target.value)} required></input>
+                  </p>
+                  <div className="buttonform">
+                    <button type="reset">
+                      <Link to="/">Cancel</Link>
+                    </button>
+                    <button type="submit" id="submit">
+                      Register
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

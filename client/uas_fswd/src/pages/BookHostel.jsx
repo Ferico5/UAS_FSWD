@@ -98,19 +98,10 @@ export default function BookHostel() {
 
     try {
       // Send POST request for booking the room
-      const bookingResponse = await axios.post('http://localhost:5000/book_hostel', bookingData, {
+      await axios.post('http://localhost:5000/book_hostel', bookingData, {
         headers: { 'Content-Type': 'application/json' },
       });
 
-      if (bookingResponse.status === 200) {
-        // Update the remaining_seater count in the database
-        await axios.put('http://localhost:5000/update_room', {
-          room_no: selectedRoom.room_no,
-          remaining_seater: selectedRoom.remaining_seater - 1,
-        });
-      }
-
-      // Send POST request for personal info
       await axios.post('http://localhost:5000/personal_info', personalInfoData);
 
       navigate('/room_details');
