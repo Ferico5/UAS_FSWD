@@ -22,6 +22,16 @@ Feedback.init(
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     },
+    id_book: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: BookRoom,
+        key: 'id_book',
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    },
     accessibility_to_warden: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -64,6 +74,6 @@ Feedback.init(
 );
 
 Feedback.belongsTo(Registration, { foreignKey: 'id_user', as: 'user' });
-Feedback.belongsTo(BookRoom, { foreignKey: 'id_user', targetKey: 'id_user', as: 'bookedRoom' });
+Feedback.belongsTo(BookRoom, { foreignKey: 'id_book', as: 'bookedRoom' });
 
 export default Feedback;

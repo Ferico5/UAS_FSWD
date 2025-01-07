@@ -13,8 +13,8 @@ export const countFeedback = async (req, res) => {
 
 export const addFeedback = async (req, res) => {
   try {
-    await Feedback.create(req.body);
-    res.status(201).json({ msg: 'Feedback Successfully Sent!' });
+    const response = await Feedback.create(req.body);
+    res.status(201).json(response);
   } catch (error) {
     console.log(error.message);
   }
@@ -36,7 +36,11 @@ export const getFeedback = async (req, res) => {
         },
       ],
     });
-    res.status(200).json(feedbacks);
+
+    const uniqueFeedbacks = feedbacks.filter((feedback, index, self) =>
+      index === self.findIndex((f) => f.id_feedback === feedback.id_feedback)
+    );
+    res.status(200).json(uniqueFeedbacks);
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ message: 'Failed to fetch feedbacks.' });
