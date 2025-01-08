@@ -43,7 +43,7 @@ export default function UpdateRoom() {
       });
 
       if (response.data.msg === 'Room Updated!') {
-        navigate('/rooms');
+      navigate('/rooms');
       }
     } catch (error) {
       console.error(error.message);

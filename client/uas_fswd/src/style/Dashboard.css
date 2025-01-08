@@ -15,11 +15,11 @@
 }
 
 .box {
+  height: auto;
   width: 100%;
+  overflow: none;
   display: flex;
   flex-direction: column;
-  margin-right: 3em;
-  margin-bottom: 2em;
   border-radius: .3em;
   transition: 0.3 s;
 }

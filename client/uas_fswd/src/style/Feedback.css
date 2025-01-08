@@ -47,7 +47,7 @@
     border-radius: 5px;
     border: 1px solid;
 } 
-.input, select{
+.input, select, .input-type{
     width: 100%;
     margin-left: 7px;
 

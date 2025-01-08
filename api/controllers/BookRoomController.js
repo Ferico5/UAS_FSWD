@@ -1,10 +1,22 @@
+import { Sequelize } from 'sequelize';
 import Feedback from '../models/FeedbackModel.js';
 import BookRoom from '../models/BookRoomModel.js';
+import RoomInfo from '../models/RoomInfoModel.js';
 
 export const addBookRoom = async (req, res) => {
   try {
     await BookRoom.create(req.body);
-    res.status(201).json({ msg: 'Successfully Booking Room!' });
+    const { room_no } = req.body;
+    const updatedRoom = await RoomInfo.update(
+      { remaining_seater: Sequelize.literal('remaining_seater - 1') }, // Mengurangi 1 dari remaining_seater
+      { where: { room_no } } // Kondisi pencarian berdasarkan room_no
+    );
+    // Jika tidak ada kamar yang diperbarui
+    if (updatedRoom[0] === 0) {
+      return res.status(404).json({ msg: 'Room not found!' });
+    }
+
+    res.status(201).json({ msg: 'Successfully Booked Room!' });
   } catch (error) {
     console.log(error.message);
   }

@@ -1,6 +1,7 @@
 .navbar {
     background-color: #f6f6f6;
     min-width: 17%;
+    width: 17vw;
     height: 91vh;
     border-right: 1px solid black;
 }
@@ -31,8 +32,4 @@
     background-color: #c0c0c047;
     text-indent: 10px;
     text-shadow: 0px 2px 10px rgba(42, 41, 41, 0.6);
-}
-
-.container-form .box-form{
-    background-color: red;
 }

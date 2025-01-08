@@ -16,6 +16,16 @@ export default function ComplaintDetail() {
   const [dateRemark, setDateRemark] = useState('');
   const [submittedRemark, setSubmittedRemark] = useState('');
 
+  // Function to format date
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date
+      .getMinutes()
+      .toString()
+      .padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+    return formattedDate;
+  };
+
   useEffect(() => {
     const fetchComplaintDetail = async () => {
       try {
@@ -31,12 +41,7 @@ export default function ComplaintDetail() {
         const response = await axios.get(`http://localhost:5000/remark_complaint/${register_complaint_id}`);
         setRemark(response.data.complaint_remark);
 
-        const date = new Date(response.data.updatedAt);
-        const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date
-          .getMinutes()
-          .toString()
-          .padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
-
+        const formattedDate = formatDate(response.data.updatedAt);
         setDateRemark(formattedDate);
       } catch (error) {
         console.error('Error fetching remark:', error.message);
@@ -58,10 +63,7 @@ export default function ComplaintDetail() {
   const handleSubmit = async () => {
     try {
       const currentDate = new Date();
-      const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')} ${currentDate.getHours().toString().padStart(2, '0')}:${currentDate
-        .getMinutes()
-        .toString()
-        .padStart(2, '0')}:${currentDate.getSeconds().toString().padStart(2, '0')}`;
+      const formattedDate = formatDate(currentDate);
 
       // Jika remark kosong (pertama kali)
       if (!remark) {
@@ -118,7 +120,7 @@ export default function ComplaintDetail() {
             complaint_remark: submittedRemark,
             updatedAt: formattedDate,
           };
-          
+
           setComplaintDetail(updatedComplaintDetail);
           setDateRemark(formattedDate);
           setShowModal(false);
@@ -155,7 +157,7 @@ export default function ComplaintDetail() {
                 <td className="bold">Complaint Number :</td>
                 <td>{complaintDetail?.register_complaint_id}</td>
                 <td className="bold">Registration Date :</td>
-                <td>{complaintDetail?.createdAt}</td>
+                <td>{complaintDetail?.createdAt && formatDate(complaintDetail.createdAt)}</td> {/* Format Tanggal */}
               </tr>
               <tr>
                 <td className="bold">Complaint Type :</td>
