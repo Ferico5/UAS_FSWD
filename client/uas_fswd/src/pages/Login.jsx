@@ -11,7 +11,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth(); // Mengambil fungsi login dari context
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +25,6 @@ export default function Login() {
       });
 
       if (response.data.msg === 'Login successful') {
-        // Simpan data user setelah login berhasil
         login(response.data.response);
         navigate('/');
       }

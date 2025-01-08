@@ -1,15 +1,12 @@
 /* eslint-disable react/prop-types */
 import { createContext, useState, useContext, useEffect } from 'react';
 
-// Membuat context untuk status login
 const AuthContext = createContext();
 
-// Membuat provider untuk AuthContext
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
-  // Inisialisasi status login dari localStorage
   useEffect(() => {
     const storedLoginStatus = localStorage.getItem('isLoggedIn') === 'true';
     const storedUserData = localStorage.getItem('userData');

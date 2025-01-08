@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../style/Login.css';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext'; // Import useAuth
+import { useAuth } from '../context/AuthContext';
 
 export default function UserForm({ isAdmin }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,9 +16,8 @@ export default function UserForm({ isAdmin }) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-  const { logout } = useAuth(); // Ambil fungsi logout dari context
+  const { logout } = useAuth();
 
-  // Set role based on isAdmin prop
   const role = isAdmin ? 'admin' : 'user';
 
   const registerUser = async () => {
