@@ -4,9 +4,9 @@ import { useState } from 'react';
 import axios from 'axios';
 
 export default function ChangePassword() {
-  const { user, logout } = useAuth(); // Ambil data user dari context
-  const userId = user?.id_user; // Ambil ID pengguna dari konteks
-  const navigate = useNavigate(); // Buat instance navigate
+  const { user, logout } = useAuth();
+  const userId = user?.id_user;
+  const navigate = useNavigate();
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -16,28 +16,24 @@ export default function ChangePassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validasi bahwa new password dan confirm new password sama
     if (newPassword !== confirmNewPassword) {
       setErrorMessage('New password and confirm password do not match!');
       return;
     }
 
     try {
-      // Kirim permintaan untuk memverifikasi current password
       const response = await axios.post(`http://localhost:5000/users/verify-password`, { id_user: userId, current_password: currentPassword });
 
       if (response.data.valid) {
-        // Kirim permintaan untuk mengubah password
         const updatedData = {
           current_password: currentPassword,
           new_password: newPassword,
-          new_password_confirmation: confirmNewPassword, // Pastikan ini dikirimkan
+          new_password_confirmation: confirmNewPassword,
         };
 
-        const updateResponse = await axios.put(`http://localhost:5000/users/${userId}`, updatedData);
-        console.log(updateResponse.data); // Pastikan untuk memeriksa respons dari server
+        await axios.put(`http://localhost:5000/users/${userId}`, updatedData);
         logout();
-        navigate('/login'); // Arahkan ke halaman yang diinginkan setelah berhasil
+        navigate('/login');
       } else {
         setErrorMessage('Current password is incorrect.');
       }

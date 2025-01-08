@@ -29,7 +29,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // Fungsi login
   const login = (userData) => {
     try {
       localStorage.setItem('isLoggedIn', 'true');
@@ -41,7 +40,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Fungsi logout
   const logout = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userData');
@@ -60,7 +58,6 @@ export const AuthProvider = ({ children }) => {
   return <AuthContext.Provider value={{ isLoggedIn, user, login, logout, updateRoomNo, setUser }}>{children}</AuthContext.Provider>;
 };
 
-// Hook untuk menggunakan AuthContext
 export const useAuth = () => {
   return useContext(AuthContext);
 };

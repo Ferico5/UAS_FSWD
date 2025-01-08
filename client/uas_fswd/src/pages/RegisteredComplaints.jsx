@@ -8,10 +8,9 @@ import { useParams, Link } from 'react-router-dom';
 export default function RegisteredComplaints() {
   const { user } = useAuth();
   const { status } = useParams();
-  const isAdmin = user && user.role === 'admin'; // Check if the user is an admin
+  const isAdmin = user && user.role === 'admin';
   const [complaints, setComplaints] = useState([]);
 
-  // Ambil data keluhan saat komponen dimuat
   useEffect(() => {
     const fetchComplaints = async () => {
       try {
@@ -20,24 +19,24 @@ export default function RegisteredComplaints() {
         if (isAdmin) {
           switch (status) {
             case 'new_complaints':
-              url = 'http://localhost:5000/register_complaint/unprocessed'; // Keluhan yang belum diproses
+              url = 'http://localhost:5000/register_complaint/unprocessed';
               break;
             case 'in_process_complaints':
-              url = 'http://localhost:5000/register_complaint/in_process'; // Keluhan yang sedang diproses
+              url = 'http://localhost:5000/register_complaint/in_process';
               break;
             case 'closed_complaints':
-              url = 'http://localhost:5000/register_complaint/closed'; // Keluhan yang sudah ditutup
+              url = 'http://localhost:5000/register_complaint/closed';
               break;
             default:
-              url = 'http://localhost:5000/register_complaint'; // Semua keluhan
+              url = 'http://localhost:5000/register_complaint';
               break;
           }
         } else {
-          url = `http://localhost:5000/register_complaint/${user.id_user}`; // Pengguna biasa hanya melihat keluhan mereka
+          url = `http://localhost:5000/register_complaint/${user.id_user}`;
         }
 
         const response = await axios.get(url);
-        setComplaints(response.data); // Menyimpan data keluhan
+        setComplaints(response.data);
       } catch (err) {
         console.error('Error fetching complaints:', err);
       }
@@ -72,10 +71,9 @@ export default function RegisteredComplaints() {
                 </thead>
                 <tbody>
                   {complaints.map((complaint, index) => {
-                    // Format tanggal
                     const date = new Date(complaint.createdAt);
                     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-                    const formattedTime = date.toTimeString().split(' ')[0]; // Ambil waktu jam:menit:detik
+                    const formattedTime = date.toTimeString().split(' ')[0];
 
                     return (
                       <tr key={complaint.register_complaint_id}>

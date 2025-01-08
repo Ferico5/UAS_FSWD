@@ -36,7 +36,6 @@ export default function BookHostel() {
         const data = response.data;
         setRooms(data);
 
-        // Only set the default room if there's no room selected yet
         if (!selectedRoom) {
           const firstAvailableRoom = data.find((room) => room.remaining_seater > 0);
           if (firstAvailableRoom) {
@@ -53,10 +52,10 @@ export default function BookHostel() {
       try {
         const response = await axios.get('https://restcountries.com/v3.1/all');
         const countries = response.data.map((country) => country.name.common);
-        setStates(countries.sort()); // Atur daftar negara secara alfabetis
+        setStates(countries.sort());
       } catch (error) {
         console.error('Error fetching states from API:', error);
-        setStates(localStates); // Gunakan data lokal jika gagal
+        setStates(localStates);
       }
     };
 
@@ -97,7 +96,6 @@ export default function BookHostel() {
     };
 
     try {
-      // Send POST request for booking the room
       await axios.post('http://localhost:5000/book_hostel', bookingData, {
         headers: { 'Content-Type': 'application/json' },
       });
@@ -110,7 +108,6 @@ export default function BookHostel() {
     }
   };
 
-  // Mendapatkan tanggal hari ini untuk atribut `min`
   const today = new Date().toISOString().split('T')[0];
 
   return (

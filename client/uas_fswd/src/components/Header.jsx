@@ -2,7 +2,7 @@ import '../style/Header.css';
 import { useAuth } from '../context/AuthContext';
 
 export default function Header() {
-  const { isLoggedIn, user, logout } = useAuth(); // Ambil status login dan data user dari context
+  const { isLoggedIn, user, logout } = useAuth();
 
   return (
     <div>
@@ -22,8 +22,7 @@ export default function Header() {
             <div className="logout">
               <a href="/login" onClick={logout}>
                 Logout
-              </a>{' '}
-              {/* Logout user */}
+              </a>
             </div>
           </div>
         </div>

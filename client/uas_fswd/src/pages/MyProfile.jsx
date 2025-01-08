@@ -28,7 +28,6 @@ export default function MyProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validasi password jika admin
     if (isAdmin && newPassword !== confirmNewPassword) {
       setErrorMessage('New password and confirm password do not match!');
       return;
@@ -42,7 +41,6 @@ export default function MyProfile() {
         ...(isAdmin && { current_password: currentPassword, new_password: newPassword }), // Hanya kirim password jika admin
       };
 
-      // Kirim data ke server
       await axios.put(`http://localhost:5000/admin/${userId}`, updatedData);
       setUser({ ...user, full_name: fullName, contact_no: contactNo, email });
 

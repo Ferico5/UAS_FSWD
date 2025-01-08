@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
-  const { isLoggedIn, user } = useAuth(); // Get status login and user data from context
-  const isAdmin = user && user.role === 'admin'; // Check if the user is an admin
+  const { isLoggedIn, user } = useAuth();
+  const isAdmin = user && user.role === 'admin';
 
   return (
     <div className="navbar">

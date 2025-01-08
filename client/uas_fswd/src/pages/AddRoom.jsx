@@ -27,9 +27,9 @@ export default function AddRoom() {
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        setErrorMsg(error.response.data.msg); // Set error message
+        setErrorMsg(error.response.data.msg);
       } else {
-        setErrorMsg('Something went wrong! Please try again.'); // General error message
+        setErrorMsg('Something went wrong! Please try again.');
       }
     }
   };

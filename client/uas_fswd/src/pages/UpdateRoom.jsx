@@ -3,22 +3,19 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 export default function UpdateRoom() {
-  const { id_room } = useParams(); // Mengambil id_room dari URL
+  const { id_room } = useParams();
   const [roomNo, setRoomNo] = useState('');
   const [seater, setSeater] = useState('');
   const [feesPerMonth, setFeesPerMonth] = useState('');
   const [remainingSeater, setRemainingSeater] = useState('');
   const navigate = useNavigate();
 
-  // Fungsi untuk mengambil data ruangan berdasarkan id_room
   useEffect(() => {
     const fetchRoomData = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/rooms/${id_room}`);
         const roomData = response.data;
 
-        
-        // Mengisi form dengan data ruangan yang ada
         setRoomNo(roomData.room_no);
         setSeater(roomData.seater);
         setFeesPerMonth(roomData.fees_per_month);
@@ -29,7 +26,7 @@ export default function UpdateRoom() {
     };
 
     fetchRoomData();
-  }, [id_room]); // Menggunakan id_room di dependency array untuk mengupdate data saat id berubah
+  }, [id_room]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

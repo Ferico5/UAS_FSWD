@@ -9,14 +9,12 @@ export default function ComplaintDetail() {
   const isAdmin = user && user.role === 'admin';
   const [complaintDetail, setComplaintDetail] = useState(null);
 
-  // Modal state
   const [showModal, setShowModal] = useState(false);
   const [status, setStatus] = useState('In Process');
   const [remark, setRemark] = useState('');
   const [dateRemark, setDateRemark] = useState('');
   const [submittedRemark, setSubmittedRemark] = useState('');
 
-  // Function to format date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date
@@ -65,16 +63,14 @@ export default function ComplaintDetail() {
       const currentDate = new Date();
       const formattedDate = formatDate(currentDate);
 
-      // Jika remark kosong (pertama kali)
       if (!remark) {
         const addRemarkComplaint = {
           complaint_remark: submittedRemark,
           register_complaint_id: register_complaint_id,
         };
 
-        // Menambahkan remark dan status untuk pertama kali
         await axios.post(`http://localhost:5000/remark_complaint/${register_complaint_id}`, addRemarkComplaint);
-        setRemark(submittedRemark); // Menyimpan remark yang sudah ditambahkan
+        setRemark(submittedRemark);
 
         const updateStatus = {
           register_complaint_id: register_complaint_id,
@@ -83,7 +79,6 @@ export default function ComplaintDetail() {
 
         await axios.put(`http://localhost:5000/update_complaint_status/${register_complaint_id}`, updateStatus);
 
-        // Mengupdate complaintDetail tanpa reload halaman
         const updatedComplaintDetail = {
           ...complaintDetail,
           complaint_status: status,
@@ -95,16 +90,14 @@ export default function ComplaintDetail() {
         setDateRemark(formattedDate);
         setShowModal(false);
       } else {
-        // Jika remark sudah ada, hanya update status dan remark
         if (remark !== submittedRemark || status !== complaintDetail.complaint_status) {
           const updateComplaint = {
             complaint_remark: submittedRemark,
             complaint_status: status,
           };
 
-          // Update remark dan status
           await axios.put(`http://localhost:5000/remark_complaint/${register_complaint_id}`, updateComplaint);
-          setRemark(submittedRemark); // Menyimpan remark yang sudah diperbarui
+          setRemark(submittedRemark);
 
           const updateStatus = {
             register_complaint_id: register_complaint_id,
@@ -113,7 +106,6 @@ export default function ComplaintDetail() {
 
           await axios.put(`http://localhost:5000/update_complaint_status/${register_complaint_id}`, updateStatus);
 
-          // Mengupdate complaintDetail tanpa reload halaman
           const updatedComplaintDetail = {
             ...complaintDetail,
             complaint_status: status,
@@ -125,7 +117,6 @@ export default function ComplaintDetail() {
           setDateRemark(formattedDate);
           setShowModal(false);
         } else {
-          // Jika tidak ada perubahan, cukup tutup modal
           setShowModal(false);
         }
       }
@@ -157,7 +148,7 @@ export default function ComplaintDetail() {
                 <td className="bold">Complaint Number :</td>
                 <td>{complaintDetail?.register_complaint_id}</td>
                 <td className="bold">Registration Date :</td>
-                <td>{complaintDetail?.createdAt && formatDate(complaintDetail.createdAt)}</td> {/* Format Tanggal */}
+                <td>{complaintDetail?.createdAt && formatDate(complaintDetail.createdAt)}</td>
               </tr>
               <tr>
                 <td className="bold">Complaint Type :</td>

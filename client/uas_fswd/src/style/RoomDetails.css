@@ -1,42 +1,66 @@
 .boxheader {
-    background-color: #F3F3EB;
-    padding: .8em;
+  background-color: #f3f3eb;
+  padding: 0.8em;
 }
 
 .boxheader p {
-    color: #565652;
-    font-weight: 600;
-    font-size: .8em;
+  color: #565652;
+  font-weight: 600;
+  font-size: 0.8em;
 }
 
 .boxinfo {
-    width: 100%;
-    margin-top: 2em;
-    padding-bottom: 1em;
+  width: 100%;
+  margin-top: 2em;
+  padding-bottom: 1em;
 }
 
 .boxinfo table {
-    width: 100%;
+  width: 100%;
 }
 
-th, td {
-    padding: 9px;
+th,
+td {
+  padding: 9px;
 }
 
 .boxinfo table .blue {
-    color: blue;
+  color: blue;
 }
 
 .boxinfo table .bigger {
-    font-size: 2em;
+  font-size: 2em;
 }
 
 .boxinfo table .red {
-    color: red;
-    font-weight: bold;
-    padding: 14px 9px;
+  color: red;
+  font-weight: bold;
+  padding: 14px 9px;
 }
 
 .boxinfo table .bold {
-    font-weight: bold;
+  font-weight: bold;
+}
+
+.pagination button {
+  border: none;
+  padding: 0.8em 1.5em;
+  margin: 1em 1em 0 0;
+  width: 115px;
+  font-size: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.pagination .pagination_button {
+  background-color: #000000f0;
+  color: #ffffff;
+  border: 2px solid black;
+}
+
+.pagination .pagination_button:hover {
+  background-color: rgb(72, 71, 71);
+  border: 2px solid rgb(72, 71, 71);
+  color: #ffffff;
+  cursor: pointer;
 }

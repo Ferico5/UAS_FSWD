@@ -17,7 +17,6 @@ export default function RoomDetails() {
     const fetchData = async () => {
       try {
         if (user) {
-          // Fetch booking details
           const bookingResponse = await axios.get(`http://localhost:5000/book_hostel/${user.id_user}`);
           setBookingDetails(bookingResponse.data);
 
@@ -33,7 +32,6 @@ export default function RoomDetails() {
     const fetchPersonalInfo = async () => {
       try {
         if (user) {
-          // Fetch personal info
           const personalInfoResponse = await axios.get(`http://localhost:5000/personal_info/${user.id_user}`);
           setPersonalInfo(personalInfoResponse.data);
         }
@@ -69,7 +67,6 @@ export default function RoomDetails() {
     fetchRoom();
   }, [bookingDetails, user, currentPage]);
 
-  // Format dates
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
@@ -79,7 +76,7 @@ export default function RoomDetails() {
   const formatDateTime = (dateString) => {
     const date = new Date(dateString);
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-    const formattedTime = date.toTimeString().split(' ')[0]; // Get time in HH:MM:SS format
+    const formattedTime = date.toTimeString().split(' ')[0];
     return `${formattedDate} ${formattedTime}`;
   };
 
@@ -92,7 +89,7 @@ export default function RoomDetails() {
   };
 
   if (!bookingDetails || !personalInfo || !registrationDetails) {
-    return <div>Loading...</div>; // Tampilkan loading jika data belum tersedia
+    return <div>Loading...</div>;
   }
 
   return (
@@ -125,7 +122,6 @@ export default function RoomDetails() {
                     </tr>
                   </thead>
                   <tbody>
-                    {/* looping */}
                     <tr>
                       <td className="bold">Registration Number :</td>
                       <td>{bookingDetails[currentPage]?.id_user}</td>
@@ -213,10 +209,10 @@ export default function RoomDetails() {
 
               {/* Navigasi Pagination */}
               <div className="pagination">
-                <button onClick={handlePrevious} disabled={currentPage === 0}>
+                <button onClick={handlePrevious} disabled={currentPage === 0} className='pagination_button'>
                   Previous
                 </button>
-                <button onClick={handleNext} disabled={currentPage === bookingDetails.length - 1}>
+                <button onClick={handleNext} disabled={currentPage === bookingDetails.length - 1} className='pagination_button'>
                   Next
                 </button>
               </div>

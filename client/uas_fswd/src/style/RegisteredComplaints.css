@@ -18,3 +18,25 @@ table button:hover {
 #center {
     text-align: center;
 }
+
+.hasBooked_message p {
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+.hasBooked_message button {
+    background-color: #000000f0;
+    color: #ffffff;
+    border: 2px solid black;
+    border: none;
+    padding: 1em 1.8em;
+    font-size: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.hasBooked_message button:hover {
+    background-color: rgb(72, 71, 71);
+    color: #ffffff;
+    cursor: pointer;
+}

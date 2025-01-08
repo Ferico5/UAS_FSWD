@@ -15,7 +15,6 @@ export default function Feedback() {
 
   const navigate = useNavigate();
 
-  // Fetch feedbacks for admin
   useEffect(() => {
     if (isAdmin) {
       fetchFeedbacks();
@@ -44,7 +43,7 @@ export default function Feedback() {
           }
 
           const bookingOptions = bookings
-            .filter((booking) => !booking.has_feedback) // Hanya booking yang belum ada feedback
+            .filter((booking) => !booking.has_feedback)
             .map((booking) => {
               const date = new Date(booking.stay_from);
               const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
@@ -75,12 +74,10 @@ export default function Feedback() {
     const selectedDate = e.target.value;
     setSelectedBooking(selectedDate);
 
-    // Find the room number based on the selected booking date
     const selectedBookingData = bookingDates.find((booking) => booking.booking_date === selectedDate);
     setRoomNo(selectedBookingData.room_no);
   };
 
-  // Feedback form state for normal users
   const [formData, setFormData] = useState({
     accessibility_to_warden: '',
     accessibility_to_hostel_committee_members: '',
@@ -112,9 +109,9 @@ export default function Feedback() {
 
     const feedbackData = {
       ...formData,
-      id_user: user.id_user, // Attach user ID from context
+      id_user: user.id_user,
       id_book: bookingDates.find((booking) => booking.booking_date === selectedBooking)?.id_book,
-      room_no: roomNo, // Attach room number
+      room_no: roomNo,
       booking_date: selectedBooking,
     };
 

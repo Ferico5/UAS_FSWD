@@ -5,7 +5,6 @@ import axios from 'axios'
 export default function Rooms() {
   const [rooms, setRooms] = useState([]);
 
-  // Fungsi untuk mengambil data room dari API
   useEffect(() => {
     const fetchRooms = async () => {
       try {
@@ -24,7 +23,6 @@ export default function Rooms() {
       try {
         const response = await axios.delete(`http://localhost:5000/delete_room/${room_no}`);
         if (response.data.msg === 'Room Deleted!') {
-          // Update data rooms setelah penghapusan
           setRooms(rooms.filter(room => room.room_no !== room_no));
         }
       } catch (error) {

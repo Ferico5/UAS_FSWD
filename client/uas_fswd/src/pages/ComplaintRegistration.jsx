@@ -27,22 +27,21 @@ export default function ComplaintRegistration() {
             setHasBooked(false);
           }
 
-          // Convert to formatted date
           const bookingOptions = bookings.map((booking) => {
             const date = new Date(booking.stay_from);
             const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
 
             return {
               room_no: booking.room_no,
-              booking_date: formattedDate, // Use formatted date for the dropdown
+              booking_date: formattedDate,
               stay_from: booking.stay_from,
             };
           });
 
-          setBookingDates(bookingOptions); // Set booking data to state
+          setBookingDates(bookingOptions);
           if (bookingOptions.length > 0) {
             setSelectedBooking(bookingOptions[0].booking_date);
-            setRoomNo(bookingOptions[0].room_no); // Sinkronkan roomNo dengan pilihan default
+            setRoomNo(bookingOptions[0].room_no);
           }
         }
       } catch (err) {
@@ -57,7 +56,6 @@ export default function ComplaintRegistration() {
     const selectedDate = e.target.value;
     setSelectedBooking(selectedDate);
 
-    // Find the room number based on the selected booking date
     const selectedBookingData = bookingDates.find((booking) => booking.booking_date === selectedDate);
     setRoomNo(selectedBookingData ? selectedBookingData.room_no : '');
   };

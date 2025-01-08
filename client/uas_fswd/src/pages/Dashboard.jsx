@@ -5,8 +5,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export default function Dashboard() {
-  const { user } = useAuth(); // Get user data from context
-  const isAdmin = user && user.role === 'admin'; // Check if the user is an admin
+  const { user } = useAuth();
+  const isAdmin = user && user.role === 'admin';
   const [studentCount, setStudentCount] = useState(0);
   const [roomCount, setRoomCount] = useState(0);
   const [complaintCount, setComplaintCount] = useState(0);
@@ -16,8 +16,6 @@ export default function Dashboard() {
   const [feedbackCount, setFeedbackCount] = useState(0);
 
   useEffect(() => {
-    // Fetch counts for students, rooms, complaints, etc.
-
     const fetchData = async () => {
       try {
         const [students, rooms, complaints, newComplaints, inProcessComplaint, closedComplaint, feedbacks] = await Promise.all([
