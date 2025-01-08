@@ -24,18 +24,82 @@ export default function FeedbackDetails() {
   }
 
   return (
-    <div>
-      <h2>Feedback Details</h2>
-      <p><strong>Full Name:</strong> {feedback.user?.full_name || 'N/A'}</p>
-      <p><strong>Room No:</strong> {feedback.bookedRoom?.room_no || 'N/A'}</p>
-      <p><strong>Accessibility to Warden:</strong> {feedback.accessibility_to_warden}</p>
-      <p><strong>Accessibility to Hostel Committee Members:</strong> {feedback.accessibility_to_hostel_committee_members}</p>
-      <p><strong>Redressal of Problems:</strong> {feedback.redressal_of_problems}</p>
-      <p><strong>Room:</strong> {feedback.room}</p>
-      <p><strong>Mess:</strong> {feedback.mess}</p>
-      <p><strong>Hostel Surroundings:</strong> {feedback.hostel_surroundings}</p>
-      <p><strong>Overall Rating:</strong> {feedback.overall_rating}</p>
-      <p><strong>Feedback Message:</strong> {feedback.feedback_message || '-'}</p>
+    <div className="container">
+      <div className="content">
+        <h2>Feedback Details</h2>
+
+        <table className="feedback-table" border="1" cellSpacing="0" cellPadding="8">
+          <thead>
+            <tr>
+              <th colSpan="2" className="table-header">
+                Feedback Information
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <strong>Full Name:</strong>
+              </td>
+              <td>{feedback.user?.full_name || 'N/A'}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Room No:</strong>
+              </td>
+              <td>{feedback.bookedRoom?.room_no || 'N/A'}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Accessibility to Warden:</strong>
+              </td>
+              <td>{feedback.accessibility_to_warden}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Accessibility to Hostel Committee Members:</strong>
+              </td>
+              <td>{feedback.accessibility_to_hostel_committee_members}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Redressal of Problems:</strong>
+              </td>
+              <td>{feedback.redressal_of_problems}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Room:</strong>
+              </td>
+              <td>{feedback.room}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Mess:</strong>
+              </td>
+              <td>{feedback.mess}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Hostel Surroundings:</strong>
+              </td>
+              <td>{feedback.hostel_surroundings}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Overall Rating:</strong>
+              </td>
+              <td>{feedback.overall_rating}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Feedback Message:</strong>
+              </td>
+              <td>{feedback.feedback_message || '-'}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

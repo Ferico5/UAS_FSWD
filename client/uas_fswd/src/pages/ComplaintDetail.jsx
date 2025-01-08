@@ -200,7 +200,7 @@ export default function ComplaintDetail() {
                   </select>
                 </div>
                 <div>
-                  <label>Remark or Text: </label>
+                  <label className='modal_margin_top'>Remark or Text: </label>
                   <textarea value={submittedRemark} onChange={(e) => setSubmittedRemark(e.target.value)} />
                 </div>
               </div>
@@ -208,7 +208,7 @@ export default function ComplaintDetail() {
                 <button type="button" onClick={handleCloseModal}>
                   Close
                 </button>
-                <button type="button" onClick={handleSubmit}>
+                <button type="submit" onClick={handleSubmit}>
                   Submit
                 </button>
               </div>

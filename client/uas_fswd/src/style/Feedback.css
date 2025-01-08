@@ -1,102 +1,135 @@
-
 .fillform-feedback {
-    border: 2px dashed  ;
-    border-radius: 5px;
-    padding: 2em 5em;   
-    background-color: #f8f8f818;
-    position: relative;
-    width: 100%;
-    margin: auto;
+  border: 2px dashed;
+  border-radius: 5px;
+  padding: 2em 5em;
+  background-color: #f8f8f818;
+  position: relative;
+  width: 100%;
+  margin: auto;
 }
 
 .flex {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: .5em 0 .5em 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em 0 0.5em 0;
 }
 
-.label-feedback{
-    width: 65%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.label-feedback {
+  width: 65%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.label-feedback input[type="radio"]{
-    margin-right: 10px;
+.label-feedback input[type='radio'] {
+  margin-right: 10px;
 }
 
 .flex label {
-    margin: 0 1em 0 .5em;
-    display: flex;
+  margin: 0 1em 0 0.5em;
+  display: flex;
 }
 
 .flexforp {
-    width: 35%;
-    display: flex;
-    justify-content: baseline;
-    font-weight: bold;
-    padding: .4em 0;
+  width: 35%;
+  display: flex;
+  justify-content: baseline;
+  font-weight: bold;
+  padding: 0.4em 0;
 }
 
-.input, input , select{
-    padding: 0.4em;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid;
-} 
-.input, select, .input-type{
-    width: 100%;
-    margin-left: 7px;
-
+.input,
+input,
+select {
+  padding: 0.4em;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid;
+}
+.input,
+select,
+.input-type {
+  width: 100%;
+  margin-left: 7px;
 }
 
 .buttonform-feedback {
-    display: flex;
-    justify-content: center;
-    margin: .5em 0;
+  display: flex;
+  justify-content: center;
+  margin: 0.5em 0;
 }
 
-.buttonform-feedback button[type="reset"] {
-    background-color: #ffffff;
-    border: 2px solid;
+.buttonform-feedback button[type='reset'] {
+  background-color: #ffffff;
+  border: 2px solid;
 }
 
-.buttonform-feedback button[type="submit"] {
-    background-color: #000000;
-    color: #ffffff;
-    font-weight: bold;
-    border: 2px solid black;
-
+.buttonform-feedback button[type='submit'] {
+  background-color: #000000;
+  color: #ffffff;
+  font-weight: bold;
+  border: 2px solid black;
 }
 
 .buttonform-feedback button {
-    /* border-radius: 9px; */
-    border: none;
-    padding: 1em 1.8em;
-    margin: 1em 1em 0;
-    width: 115px;
-    font-size: 15px;
-    text-align: center;
+  border: none;
+  padding: 1em 1.8em;
+  margin: 1em 1em 0;
+  width: 115px;
+  font-size: 15px;
+  text-align: center;
 }
 
 .buttonform-feedback button:hover {
-    background-color: rgb(72, 71, 71);
-    border: 2px solid rgb(72, 71, 71);
+  background-color: rgb(72, 71, 71);
+  border: 2px solid rgb(72, 71, 71);
 }
 
 .buttonform-feedback button a {
-    text-decoration: none;
-    color: black;
-    font-weight: bol    d;
+  text-decoration: none;
+  color: black;
+  font-weight: bol d;
 }
 
 .buttonform-feedback button:hover a {
-    color: white;
+  color: white;
 }
 
 .buttonform-feedback button:hover {
-    cursor: pointer;
-}   
+  cursor: pointer;
+}
+
+.feedback-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+  background-color: #f9f9f9;
+}
+
+.feedback-table th {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+}
+
+.feedback-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.feedback-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table-header {
+  background-color: #0056b3;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+}
