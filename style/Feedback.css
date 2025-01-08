@@ -1,0 +1,65 @@
+.fillform-feedback {
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.fillform-feedback p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 1em;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5em 0 .5em 0;
+}
+
+.flex label {
+    margin: 0 2em 0 .5em
+}
+
+.flexforp {
+    width: 32%;
+    display: flex;
+    justify-content: flex-end;
+    font-weight: bold;
+}
+
+.input-type {
+    width: 56.5%;
+    padding: 0.3em;
+}
+
+.buttonform-feedback {
+    display: flex;
+    justify-content: center;
+    margin: .5em 0;
+}
+
+.buttonform-feedback button[type="reset"] {
+    background-color: #3E3F3A;
+}
+
+.buttonform-feedback button[type="submit"] {
+    background-color: #2E5A82;
+    color: #DCDCDA;
+}
+
+.buttonform-feedback button {
+    border-radius: 2px;
+    border: none;
+    padding: .5em 1em;
+    margin: 1em;
+}
+
+.buttonform-feedback button a {
+    color: #DCDCDA;
+    text-decoration: none;
+}
+
+.buttonform-feedback button:hover {
+    cursor: pointer;
+}

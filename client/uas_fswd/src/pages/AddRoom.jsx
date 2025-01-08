@@ -40,7 +40,7 @@ export default function AddRoom() {
         <h2>Add Room</h2>
 
         <div className="container">
-          <div className="box">
+        <div className="box">
             <form className="form" onSubmit={handleSubmit}>
               <div className="fillform">
                 <p>

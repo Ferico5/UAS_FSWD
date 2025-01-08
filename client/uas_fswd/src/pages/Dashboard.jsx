@@ -53,7 +53,7 @@ export default function Dashboard() {
         {isAdmin ? (
           <div className="dashboard">
             <div className="box-container">
-              <div className="box" id="purple">
+              <div className="box-dashboard" id="purple">
                 <div className="box-title">
                   <div className="info">
                     <h3 className="qty">{studentCount}</h3>
@@ -65,7 +65,7 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="box" id="green">
+              <div className="box-dashboard" id="green">
                 <div className="box-title">
                   <div className="info">
                     <h3 className="qty">{roomCount}</h3>
@@ -77,7 +77,7 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="box" id="blue">
+              <div className="box-dashboard" id="blue">
                 <div className="box-title">
                   <div className="info">
                     <h3 className="qty">{complaintCount}</h3>
@@ -89,7 +89,7 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="box" id="red">
+              <div className="box-dashboard" id="red">
                 <div className="box-title">
                   <div className="info">
                     <h3 className="qty">{newComplaintCount}</h3>
@@ -101,7 +101,7 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="box" id="orange">
+              <div className="box-dashboard" id="orange">
                 <div className="box-title">
                   <div className="info">
                     <h3 className="qty">{inProcessComplaintCount}</h3>
@@ -113,7 +113,7 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="box" id="green">
+              <div className="box-dashboard" id="green">
                 <div className="box-title">
                   <div className="info">
                     <h3 className="qty">{closedComplaintCount}</h3>
@@ -125,7 +125,7 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="box" id="blue">
+              <div className="box-dashboard" id="blue">
                 <div className="box-title">
                   <div className="info">
                     <h3 className="qty">{feedbackCount}</h3>
@@ -141,7 +141,7 @@ export default function Dashboard() {
         ) : (
           <div className="dashboard">
             <div className="box-container">
-              <div className="box" id="blue">
+              <div className="box-dashboard" id="blue">
                 <div className="box-title">
                   <h3>My Profile</h3>
                 </div>
@@ -150,7 +150,7 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="box" id="green">
+              <div className="box-dashboard" id="green">
                 <div className="box-title">
                   <h3>My Room</h3>
                 </div>

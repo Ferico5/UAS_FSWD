@@ -54,7 +54,7 @@ export default function UserForm({ isAdmin }) {
   };
 
   return (
-    <div>
+    <div className='register-form'>
       <form className="form" onSubmit={handleSubmit}>
         <div className="form-content">
           <label htmlFor="full_name">Full Name</label>

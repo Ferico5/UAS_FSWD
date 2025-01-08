@@ -41,7 +41,7 @@ export default function Login() {
 
   return (
     <div>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form-login" onSubmit={handleSubmit}>
         <div className="form-content">
           <label htmlFor="email">Email</label>
           <input type="text" name="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -50,7 +50,7 @@ export default function Login() {
 
           {errorMessage && <div className="error-message">{errorMessage}</div>}
 
-          <Button type="primary" loading={isLoading} htmlType="submit" className="button">
+          <Button type="primary" loading={isLoading} htmlType="submit" className="button_form">
             Login
           </Button>
         </div>

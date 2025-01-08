@@ -1,3 +1,64 @@
-.container {
+body{
+    font-family: Arial;
+    height: 100vh;
+}
+#root{
+    height: 100vh;
+    overflow: hidden;
+}
+.main {
     display: flex;
+    height: 91vh;
+    overflow: hidden;
+}
+.container {
+    height: 100%;
+    width: 83vw;
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    display: flex;
+    justify-content: center;
+}
+.content {
+    height: fit-content;
+    background-color: rgba(242, 242, 243, 0.057);
+    width: 83vw;    
+    padding: 3em;
+}
+
+/* AddRoom page */
+.container .box .form{
+    height: auto;
+    margin: 0 0;
+    width: 95%;
+    border: 2px dashed black;
+    border-radius: 5px;
+    padding: 3em 2em;
+}
+.container .box .form .fillform{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container .box .form .fillform p{
+    margin-bottom: 1em;
+    width: 50%;
+    font-weight: bold;
+}
+
+.container .box .form .fillform .buttonform{
+    margin: 0;
+}
+
+.container .box .form .fillform button{
+    padding: 1em 2em;
+    width: 140px;
+}
+
+/* RoomsDetail page */
+.boxes{
+    width: 100%;
+    margin-right: 5em;
 }

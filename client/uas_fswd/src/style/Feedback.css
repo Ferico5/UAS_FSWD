@@ -1,36 +1,56 @@
-.fillform-feedback {
-    border: 2px solid black;
-    border-radius: 5px;
-}
 
-.fillform-feedback p {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-right: 1em;
+.fillform-feedback {
+    border: 2px dashed  ;
+    border-radius: 5px;
+    padding: 2em 5em;   
+    background-color: #f8f8f818;
+    position: relative;
+    width: 100%;
+    margin: auto;
 }
 
 .flex {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: .5em 0 .5em 0;
 }
 
+.label-feedback{
+    width: 65%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.label-feedback input[type="radio"]{
+    margin-right: 10px;
+}
+
 .flex label {
-    margin: 0 2em 0 .5em
+    margin: 0 1em 0 .5em;
+    display: flex;
 }
 
 .flexforp {
-    width: 32%;
+    width: 35%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: baseline;
     font-weight: bold;
+    padding: .4em 0;
 }
 
-.input-type {
-    width: 56.5%;
-    padding: 0.3em;
+.input, input , select{
+    padding: 0.4em;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid;
+} 
+.input, select, .input-type{
+    width: 100%;
+    margin-left: 7px;
+
 }
 
 .buttonform-feedback {
@@ -40,26 +60,43 @@
 }
 
 .buttonform-feedback button[type="reset"] {
-    background-color: #3E3F3A;
+    background-color: #ffffff;
+    border: 2px solid;
 }
 
 .buttonform-feedback button[type="submit"] {
-    background-color: #2E5A82;
-    color: #DCDCDA;
+    background-color: #000000;
+    color: #ffffff;
+    font-weight: bold;
+    border: 2px solid black;
+
 }
 
 .buttonform-feedback button {
-    border-radius: 2px;
+    /* border-radius: 9px; */
     border: none;
-    padding: .5em 1em;
-    margin: 1em;
+    padding: 1em 1.8em;
+    margin: 1em 1em 0;
+    width: 115px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.buttonform-feedback button:hover {
+    background-color: rgb(72, 71, 71);
+    border: 2px solid rgb(72, 71, 71);
 }
 
 .buttonform-feedback button a {
-    color: #DCDCDA;
     text-decoration: none;
+    color: black;
+    font-weight: bol    d;
+}
+
+.buttonform-feedback button:hover a {
+    color: white;
 }
 
 .buttonform-feedback button:hover {
     cursor: pointer;
-}
+}   

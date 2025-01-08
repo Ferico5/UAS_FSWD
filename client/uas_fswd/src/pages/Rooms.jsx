@@ -38,7 +38,7 @@ export default function Rooms() {
       <div className="content">
         <h2>Rooms Detail</h2>
         <div className="container">
-          <div className="box">
+          <div className="boxes">
             <div className="boxheader">
               <p>ALL ROOMS</p>
             </div>
