@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import RoomDetails from './RoomDetails';
 
 export default function FeedbackDetails() {
   const { id_feedback } = useParams();
@@ -26,7 +27,9 @@ export default function FeedbackDetails() {
   return (
     <div className="container">
       <div className="content">
-        <h2>Feedback Details</h2>
+        <RoomDetails id_user={feedback.id_user} />
+
+        <h2 className="padding-top-feedback">Feedback Details</h2>
 
         <table className="feedback-table" border="1" cellSpacing="0" cellPadding="8">
           <thead>
