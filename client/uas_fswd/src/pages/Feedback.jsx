@@ -42,17 +42,19 @@ export default function Feedback() {
             setHasBooked(false);
           }
 
+          const today = new Date();
           const bookingOptions = bookings
-            .filter((booking) => !booking.has_feedback)
+            .filter((booking) => new Date(booking.end_date) <= today && !booking.has_feedback) // Tambahkan validasi end_date
             .map((booking) => {
-              const date = new Date(booking.stay_from);
-              const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+              const startDate = new Date(booking.stay_from);
+              const formattedStartDate = `${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().padStart(2, '0')}-${startDate.getDate().toString().padStart(2, '0')}`;
 
               return {
                 id_book: booking.id_book,
                 room_no: booking.room_no,
-                booking_date: formattedDate,
+                booking_date: formattedStartDate,
                 stay_from: booking.stay_from,
+                end_date: booking.end_date,
               };
             });
 
@@ -104,6 +106,12 @@ export default function Feedback() {
     const selectedBookingData = bookingDates.find((booking) => booking.booking_date === selectedBooking);
     if (!selectedBookingData) {
       alert('Invalid booking selected. Please choose another booking.');
+      return;
+    }
+
+    const today = new Date();
+    if (new Date(selectedBookingData.end_date) > today) {
+      alert('You can only submit feedback after your booking period is over.');
       return;
     }
 
@@ -204,126 +212,126 @@ export default function Feedback() {
         <div className="box-feedback">
           <form className="form-feedback" onSubmit={handleSubmit}>
             <div className="fillform-feedback">
-             <div className="flex">
+              <div className="flex">
                 <div className="flexforp">
                   <p>Booking Date:</p>
                 </div>
                 <div className="label-feedback">
-                <select name="booking_date" id="booking_date" value={selectedBooking} onChange={handleBookingChange} required>
-                  {bookingDates.map((booking, index) => (
-                    <option key={index} value={booking.booking_date}>
-                      {booking.booking_date} - Room {booking.room_no}
-                    </option>
-                  ))}
-                </select>
+                  <select name="booking_date" id="booking_date" value={selectedBooking} onChange={handleBookingChange} required>
+                    {bookingDates.map((booking, index) => (
+                      <option key={index} value={booking.booking_date}>
+                        {booking.booking_date} - Room {booking.room_no}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                </div>
+              </div>
               <div className="flex">
                 <div className="flexforp">
                   <p>Accessibility to Warden:</p>
                 </div>
                 <div className="label-feedback">
-                {['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'].map((option) => (
-                  <label key={option}>
-                    <input type="radio" name="accessibility_to_warden" value={option} checked={formData.accessibility_to_warden === option} onChange={handleInputChange} />
-                    {option}
-                  </label>
-                ))}
+                  {['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'].map((option) => (
+                    <label key={option}>
+                      <input type="radio" name="accessibility_to_warden" value={option} checked={formData.accessibility_to_warden === option} onChange={handleInputChange} />
+                      {option}
+                    </label>
+                  ))}
                 </div>
               </div>
 
-                <div className="flex">
-                  <div className="flexforp">
-                    <p>Accessibility to Hostel Committee Members:</p>
-                  </div>
-                  <div className="label-feedback">
+              <div className="flex">
+                <div className="flexforp">
+                  <p>Accessibility to Hostel Committee Members:</p>
+                </div>
+                <div className="label-feedback">
                   {['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'].map((option) => (
                     <label key={option}>
                       <input type="radio" name="accessibility_to_hostel_committee_members" value={option} checked={formData.accessibility_to_hostel_committee_members === option} onChange={handleInputChange} />
                       {option}
                     </label>
                   ))}
-                  </div>
                 </div>
+              </div>
 
-                <div className="flex">
-                  <div className="flexforp">
-                    <p>Redressal of Problems:</p>
-                  </div>
-                  <div className="label-feedback">
+              <div className="flex">
+                <div className="flexforp">
+                  <p>Redressal of Problems:</p>
+                </div>
+                <div className="label-feedback">
                   {['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'].map((option) => (
                     <label key={option}>
                       <input type="radio" name="redressal_of_problems" value={option} checked={formData.redressal_of_problems === option} onChange={handleInputChange} />
                       {option}
                     </label>
                   ))}
-                  </div>
                 </div>
+              </div>
 
-                <div className="flex">
-                  <div className="flexforp">
-                    <p>Room:</p>
-                  </div>
-                  <div className="label-feedback">
+              <div className="flex">
+                <div className="flexforp">
+                  <p>Room:</p>
+                </div>
+                <div className="label-feedback">
                   {['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'].map((option) => (
                     <label key={option}>
                       <input type="radio" name="room" value={option} checked={formData.room === option} onChange={handleInputChange} />
                       {option}
                     </label>
                   ))}
-                  </div>
                 </div>
+              </div>
 
-                <div className="flex">
-                  <div className="flexforp">
-                    <p>Mess:</p>
-                  </div>
-                  <div className="label-feedback">
+              <div className="flex">
+                <div className="flexforp">
+                  <p>Mess:</p>
+                </div>
+                <div className="label-feedback">
                   {['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'].map((option) => (
                     <label key={option}>
                       <input type="radio" name="mess" value={option} checked={formData.mess === option} onChange={handleInputChange} />
                       {option}
                     </label>
                   ))}
-                  </div>
                 </div>
+              </div>
 
-                <div className="flex">
-                  <div className="flexforp">
-                    <p>Hostel Surroundings:</p>
-                  </div>
-                  <div className="label-feedback">
+              <div className="flex">
+                <div className="flexforp">
+                  <p>Hostel Surroundings:</p>
+                </div>
+                <div className="label-feedback">
                   {['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'].map((option) => (
                     <label key={option}>
                       <input type="radio" name="hostel_surroundings" value={option} checked={formData.hostel_surroundings === option} onChange={handleInputChange} />
                       {option}
                     </label>
                   ))}
-                  </div>
                 </div>
+              </div>
 
-                <div className="flex">
-                  <div className="flexforp">
-                    <p>Overall Rating:</p>
-                  </div>
-                  <div className="label-feedback">
+              <div className="flex">
+                <div className="flexforp">
+                  <p>Overall Rating:</p>
+                </div>
+                <div className="label-feedback">
                   {['Excellent', 'Very Good', 'Good', 'Average', 'Below Average'].map((option) => (
                     <label key={option}>
                       <input type="radio" name="overall_rating" value={option} checked={formData.overall_rating === option} onChange={handleInputChange} />
                       {option}
                     </label>
                   ))}
-                  </div>
                 </div>
+              </div>
 
-                <div className="flex">
-                  <div className="flexforp">
-                    <p>Feedback Message (if any):</p>
-                  </div>
-                  <div className="label-feedback">
-                    <input type="text" name="feedback_message" className="input-type" value={formData.feedback_message} onChange={handleInputChange} />
-                  </div>
+              <div className="flex">
+                <div className="flexforp">
+                  <p>Feedback Message (if any):</p>
                 </div>
+                <div className="label-feedback">
+                  <input type="text" name="feedback_message" className="input-type" value={formData.feedback_message} onChange={handleInputChange} />
+                </div>
+              </div>
 
               <div className="buttonform-feedback">
                 <button type="reset">
