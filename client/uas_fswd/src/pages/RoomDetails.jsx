@@ -23,7 +23,6 @@ export default function RoomDetails({ id_user }) {
         if (bookingResponse.data.length === 0) {
           setHasBooked(false);
         }
-        
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -67,11 +66,11 @@ export default function RoomDetails({ id_user }) {
     fetchRoom();
   }, [bookingDetails, user, currentPage]);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-    return formattedDate;
-  };
+  // const formatDate = (dateString) => {
+  //   const date = new Date(dateString);
+  //   const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+  //   return formattedDate;
+  // };
 
   const formatDateTime = (dateString) => {
     const date = new Date(dateString);
@@ -115,7 +114,7 @@ export default function RoomDetails({ id_user }) {
                     </p>
                   </div>
                 ) : null}
-                  
+
                 <div className="boxinfo">
                   <table border="1" cellSpacing="0">
                     <thead>
@@ -127,24 +126,24 @@ export default function RoomDetails({ id_user }) {
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="bold">Registration Number :</td>
-                        <td>{bookingDetails[currentPage]?.id_user}</td>
+                        <td className="bold">Room No :</td>
+                        <td>{bookingDetails[currentPage]?.room_no}</td>
                         <td className="bold">Apply Date :</td>
                         <td colSpan="3">{formatDateTime(bookingDetails[currentPage]?.createdAt)}</td>
                       </tr>
                       <tr>
-                        <td className="bold">Room no :</td>
-                        <td>{bookingDetails[currentPage]?.room_no}</td>
+                        <td className="bold">Food Status :</td>
+                        <td>{bookingDetails[currentPage]?.food_status}</td>
                         <td className="bold">Seater :</td>
                         <td>{roomDetails?.seater || 'N/A'}</td>
                         <td className="bold">Fees PM : </td>
                         <td>{roomDetails?.fees_per_month || 'N/A'}</td>
                       </tr>
                       <tr>
-                        <td className="bold">Food Status :</td>
-                        <td>{bookingDetails[currentPage]?.food_status}</td>
                         <td className="bold">Stay From :</td>
-                        <td>{formatDate(bookingDetails[currentPage]?.stay_from)}</td>
+                        <td>{formatDateTime(bookingDetails[currentPage]?.stay_from)}</td>
+                        <td className="bold">Stay Until :</td>
+                        <td>{formatDateTime(bookingDetails[currentPage]?.end_date)}</td>
                         <td className="bold">Duration : </td>
                         <td>{bookingDetails[currentPage]?.duration}</td>
                       </tr>

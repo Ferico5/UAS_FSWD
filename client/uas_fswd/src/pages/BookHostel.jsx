@@ -77,8 +77,9 @@ export default function BookHostel() {
     const bookingData = {
       room_no: selectedRoom.room_no,
       food_status: formData.food_status,
-      stay_from: formData.stay_from,
+      stay_from: new Date(formData.stay_from),
       duration: formData.duration,
+      end_date: new Date(new Date(formData.stay_from).setMonth(new Date(formData.stay_from).getMonth() + parseInt(formData.duration))),
       id_user: user.id_user,
     };
 
@@ -108,7 +109,7 @@ export default function BookHostel() {
     }
   };
 
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().slice(0, 16);
 
   return (
     <div className="container">
@@ -151,7 +152,7 @@ export default function BookHostel() {
                 </select>
               </p>
               <p>
-                Stay From: <input type="date" name="stay_from" id="stayFrom" min={today} onChange={(e) => setFormData({ ...formData, stay_from: e.target.value })} required></input>
+                Stay From: <input type="datetime-local" name="stay_from" id="stayFrom" min={today} onChange={(e) => setFormData({ ...formData, stay_from: e.target.value })} required></input>
               </p>
               <p>
                 Duration:

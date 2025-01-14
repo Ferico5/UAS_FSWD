@@ -1,17 +1,48 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize, Op } from 'sequelize';
 import Feedback from '../models/FeedbackModel.js';
 import BookRoom from '../models/BookRoomModel.js';
 import RoomInfo from '../models/RoomInfoModel.js';
+import cron from 'node-cron';
+import { addMonths } from 'date-fns';
+
+// Cron job: cek setiap menit
+cron.schedule('* * * * *', async () => {
+  try {
+    const today = new Date();
+    const completedBookings = await BookRoom.findAll({
+      where: {
+        end_date: { [Op.lte]: today },
+        processed: false,
+      },
+    });
+
+    for (const booking of completedBookings) {
+      const { room_no, id_book } = booking;
+
+      await RoomInfo.update({ remaining_seater: Sequelize.literal('remaining_seater + 1') }, { where: { room_no } });
+
+      await BookRoom.update(
+        { processed: true },
+        { where: { id_book } }
+      );
+    }
+  } catch (error) {
+    console.error('Error processing completed bookings:', error.message);
+  }
+});
 
 export const addBookRoom = async (req, res) => {
   try {
-    await BookRoom.create(req.body);
-    const { room_no } = req.body;
+    const { stay_from, duration, room_no } = req.body;
+    // const end_date = addMonths(new Date(stay_from), parseInt(duration));
+    const end_date = new Date(new Date(stay_from).getTime() + 1 * 60 * 1000);
+
+    await BookRoom.create({ ...req.body, end_date });
     const updatedRoom = await RoomInfo.update(
-      { remaining_seater: Sequelize.literal('remaining_seater - 1') }, // Mengurangi 1 dari remaining_seater
-      { where: { room_no } } // Kondisi pencarian berdasarkan room_no
+      { remaining_seater: Sequelize.literal('remaining_seater - 1') },
+      { where: { room_no } }
     );
-    // Jika tidak ada kamar yang diperbarui
+
     if (updatedRoom[0] === 0) {
       return res.status(404).json({ msg: 'Room not found!' });
     }

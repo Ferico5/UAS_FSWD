@@ -44,6 +44,15 @@ BookRoom.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    end_date: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    processed: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
   },
   {
     sequelize: db,
