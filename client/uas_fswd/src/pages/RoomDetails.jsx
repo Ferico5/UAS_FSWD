@@ -31,7 +31,7 @@ export default function RoomDetails({ id_user }) {
     const fetchPersonalInfo = async () => {
       try {
         if (user) {
-          const personalInfoResponse = await axios.get(`http://localhost:5000/personal_info/${user.id_user}`);
+          const personalInfoResponse = await axios.get(`http://localhost:5000/personal_info/${id_user ?? user.id_user}`);
           setPersonalInfo(personalInfoResponse.data);
         }
       } catch (error) {
